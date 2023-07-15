@@ -1,0 +1,9 @@
+{
+    "ejercicios": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "repeticiones": 5,
+            "cuerpo": " brazoizquierdo"
+        }
+    ]
+}
