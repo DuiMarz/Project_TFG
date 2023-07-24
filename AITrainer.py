@@ -48,8 +48,9 @@ def comenzar_sesion(listaEj):
 
 
 def main():
-    lista = crear_sesion()
-    comenzar_sesion(listaEj=lista)
+    # lista = crear_sesion()
+    # comenzar_sesion(listaEj=lista)
+    alm.ejecutar_ejercicio("Pesas del brazo derecho")
 
 
 if __name__ == "__main__":

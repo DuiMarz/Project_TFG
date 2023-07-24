@@ -2,17 +2,19 @@
     "ejercicios": [
         {
             "nombre": "Pesas del brazo izquierdo",
+            "series": 2,
             "repeticiones": 5,
             "cuerpo": "brazoizquierdo",
-            "anguloIni": 60,
-            "anguloFin": 170
+            "anguloIni": 160,
+            "anguloFin": 50
         },
         {
             "nombre": "Pesas del brazo derecho",
-            "repeticiones": 5,
+            "series": 2,
+            "repeticiones": 2,
             "cuerpo": "brazoderecho",
-            "anguloIni": 60,
-            "anguloFin": 170
+            "anguloIni": 155,
+            "anguloFin": 21
         }
     ]
 }

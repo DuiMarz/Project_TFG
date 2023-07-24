@@ -25,9 +25,11 @@ class utilities():
 
         return {"count": count, "fase1": fase1, "fase2": fase2, "fase3": fase3 }
     
-    def display_rep_count(self, img, count, total_reps):            #Dibujo en pantalla en contador de repeticiones
+    def display_rep_count(self, img, count, total_reps, nseries, total_series):            #Dibujo en pantalla en contador de repeticiones
         cv2.rectangle(img, (0, 450), (250, 720), (0, 255, 0), cv2.FILLED)
         cv2.putText(img, str(int(count)) + "/" + str(total_reps), (35, 630), cv2.FONT_HERSHEY_PLAIN, 5,
+                    (255, 0, 0), 10)
+        cv2.putText(img, str(int(nseries)) + "/" + str(total_series), (35, 530), cv2.FONT_HERSHEY_PLAIN, 5,
                     (255, 0, 0), 10)
         
     def display_rep_count_movil(self, img, count, total_reps):      #Versión para videos en formato vertical
@@ -93,75 +95,91 @@ class ejercicios():
 
     listaSeq = []
 
-    def ejercicio_generico(self, total_reps, cuerpo, anguloIni, anguloFin):
+    def ejercicio_generico(self, total_reps, total_series, cuerpo, anguloIni, anguloFin):
         cap = cv2.VideoCapture("pexels-michelangelo-buonarroti.mp4")
-        salida = cv2.VideoWriter('pesas_brazoIzquierdo.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
+        #salida = cv2.VideoWriter('ejercicio_generico.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
         success = True
 
+        nseries = 0
         count = 0
+        ejCompleto = 0
         countF1 = 0
         countF2 = 0
         countF3 = 0
     
         start = time.process_time()
-        while count < total_reps:
-            success, img = cap.read()
-            if not success:
-                break
-            img = cv2.resize(img, (1280, 720))
-    
-            is_person_facing_foward = False
-            img = detector.findPose(img, False)
-            landmark_list = detector.findPosition(img, False)
-            if len(landmark_list) != 0:
+        while nseries < total_series:
+            while count < total_reps:
+                success, img = cap.read()
+                if not success:
+                    break
+                img = cv2.resize(img, (1280, 720))
+        
+                is_person_facing_foward = False
+                img = detector.findPose(img, False)
+                landmark_list = detector.findPosition(img, False)
+                if len(landmark_list) != 0:
 
-                is_person_facing_foward = detector.persona_de_frente(90)
-                ##Si posicion=tumbado, añadir método para comprobar que la persona esté tumbada
-                if not is_person_facing_foward:
-                    left_arm_angle = detector.findAngle(img, cuerpo[0], cuerpo[1], cuerpo[2])            ## Parte del cuerpo
+                    is_person_facing_foward = detector.persona_de_frente(90)
+                    ##Si posicion=tumbado, añadir método para comprobar que la persona esté tumbada
+                    if not is_person_facing_foward:
+                        angle = detector.findAngle(img, cuerpo[0], cuerpo[1], cuerpo[2])            ## Parte del cuerpo
 
-                    per = np.interp(left_arm_angle, (anguloIni, anguloFin), (0, 100))           ## Angulo inicial y final (205, 335)
-                    bar = np.interp(left_arm_angle, (anguloIni, anguloFin), (650, 100))
+                        per = np.interp(angle, (anguloIni, anguloFin), (0, 100), period = 360)           ## Angulo inicial y final (205, 335)
+                        bar = np.interp(angle, (anguloIni, anguloFin), (650, 100), period = 360)
 
-                    color, current_state = utilities().get_performance_bar_color(per)
-                    utilities().update_sequence(listSeq= self.listaSeq, currentState= current_state)
+                        if angle > anguloIni:     #Si anguloIni > anguloFin (e.j. 170 > 60)
+                            per = 0
+                            bar = 650
+                        elif angle < anguloFin:
+                            per = 100
+                            bar = 100
+
+                        color, current_state = utilities().get_performance_bar_color(per)
+                        utilities().update_sequence(listSeq= self.listaSeq, currentState= current_state)
+                            
+                            
                         
-                        
-                    
-                    # When exercise is in start state
-                    if per == 0:
-                        color = (0, 255, 0)
-                        rep = utilities().repitition_counter(count= count,fase1=countF1, fase2=countF2, fase3=countF3, 
-                                                                listSeq=self.listaSeq, state=current_state )
-                        #self.listaSeq = []
-                        count = rep["count"]
-                        countF1 = rep["fase1"]
-                        countF2 = rep["fase2"]
-                        countF3 = rep["fase3"]
+                        # When exercise is in start state
+                        if per == 0:
+                            color = (0, 255, 0)
+                            rep = utilities().repitition_counter(count= count,fase1=countF1, fase2=countF2, fase3=countF3, 
+                                                                    listSeq=self.listaSeq, state=current_state )
+                            #self.listaSeq = []
+                            count = rep["count"]
+                            countF1 = rep["fase1"]
+                            countF2 = rep["fase2"]
+                            countF3 = rep["fase3"]
 
-                    utilities().draw_performance_bar(img, per, bar, color, count)
 
-                    utilities().display_rep_count(img, count, total_reps)
-                else:
-                    print("Ponte de lado, por favor")
-                    detector.findAngle(img, 11, 0, 12, True)
 
-            cv2.imshow("Image", img)
-            salida.write(img)
-            if cv2.waitKey(1)== ord('q'):
-                break
+                        utilities().draw_performance_bar(img, per, bar, color, count)
+
+                        utilities().display_rep_count(img, count, total_reps, nseries, total_series)
+                    else:
+                        print("Ponte de lado, por favor")
+                        detector.findAngle(img, 11, 0, 12, True)
+
+                cv2.imshow("Image", img)
+                #salida.write(img)
+                if cv2.waitKey(1)== ord('q'):
+                    break
+
+            nseries += 1
+            ejCompleto += count
+            count = 0
 
         time_elapsed = int(time.process_time() - start)
         print(time_elapsed , '\n')
-        print('Ejercicio hecho al 100%', count, '\n')
+        print('Ejercicio hecho al 100%', ejCompleto, '\n')
         print('Fase1: ', countF1 , '\n')
         print('Fase2: ', countF2 , '\n')
         print('Fase3: ', countF3 , '\n')
 
 
         cap.release()
-        salida.release()
+        #salida.release()
         cv2.destroyAllWindows()
 
 
