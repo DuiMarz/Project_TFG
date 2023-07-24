@@ -95,7 +95,7 @@ class ejercicios():
 
     listaSeq = []
 
-    def ejercicio_generico(self, total_reps, total_series, cuerpo, anguloIni, anguloFin):
+    def ejercicio_generico(self, total_reps, total_series, cuerpo, t_posicion, anguloIni, anguloFin):
         cap = cv2.VideoCapture("pexels-michelangelo-buonarroti.mp4")
         #salida = cv2.VideoWriter('ejercicio_generico.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
@@ -126,15 +126,34 @@ class ejercicios():
                     if not is_person_facing_foward:
                         angle = detector.findAngle(img, cuerpo[0], cuerpo[1], cuerpo[2])            ## Parte del cuerpo
 
-                        per = np.interp(angle, (anguloIni, anguloFin), (0, 100), period = 360)           ## Angulo inicial y final (205, 335)
+                        per = np.interp(angle, (anguloIni, anguloFin), (0, 99), period = 360)           ## Angulo inicial y final (205, 335)
                         bar = np.interp(angle, (anguloIni, anguloFin), (650, 100), period = 360)
 
                         if angle > anguloIni:     #Si anguloIni > anguloFin (e.j. 170 > 60)
                             per = 0
                             bar = 650
                         elif angle < anguloFin:
-                            per = 100
+                            per = 99
                             bar = 100
+
+                        if per >= 99: 
+                            if contando == False:
+                                tiempoEjercicio = time.process_time()
+                                contando = True
+                            elif contando == True:
+                                t = int(time.process_time() - tiempoEjercicio)
+                                if t >= t_posicion:
+                                    per = 100
+                                if per != 100:    
+                                    cv2.putText(img, str(t), (1150, 630), cv2.FONT_HERSHEY_PLAIN, 5,
+                                    (255, 0, 0), 10)
+                                else:
+                                    cv2.putText(img, str(t_posicion), (1150, 630), cv2.FONT_HERSHEY_PLAIN, 5,
+                                    (255, 0, 0), 10)      
+                        elif per < 99:
+                            contando = False
+
+                        
 
                         color, current_state = utilities().get_performance_bar_color(per)
                         utilities().update_sequence(listSeq= self.listaSeq, currentState= current_state)

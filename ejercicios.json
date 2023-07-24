@@ -2,6 +2,7 @@
     "ejercicios": [
         {
             "nombre": "Pesas del brazo izquierdo",
+            "tiempoEjercicio": 0,
             "series": 2,
             "repeticiones": 5,
             "cuerpo": "brazoizquierdo",
@@ -10,11 +11,12 @@
         },
         {
             "nombre": "Pesas del brazo derecho",
+            "tiempoEjercicio": 2,
             "series": 2,
             "repeticiones": 2,
             "cuerpo": "brazoderecho",
             "anguloIni": 155,
-            "anguloFin": 21
+            "anguloFin": 25
         }
     ]
 }
