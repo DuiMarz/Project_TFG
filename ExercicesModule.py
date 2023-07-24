@@ -93,7 +93,7 @@ class ejercicios():
 
     listaSeq = []
 
-    def ejercicio_generico(self, total_reps, cuerpo):
+    def ejercicio_generico(self, total_reps, cuerpo, anguloIni, anguloFin):
         cap = cv2.VideoCapture("pexels-michelangelo-buonarroti.mp4")
         salida = cv2.VideoWriter('pesas_brazoIzquierdo.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
@@ -119,10 +119,10 @@ class ejercicios():
                 is_person_facing_foward = detector.persona_de_frente(90)
                 ##Si posicion=tumbado, añadir método para comprobar que la persona esté tumbada
                 if not is_person_facing_foward:
-                    left_arm_angle = detector.findAngle(img, 11, 13, 15)            ## Parte del cuerpo
+                    left_arm_angle = detector.findAngle(img, cuerpo[0], cuerpo[1], cuerpo[2])            ## Parte del cuerpo
 
-                    per = np.interp(left_arm_angle, (205, 335), (0, 100))           ## Angulo inicial y final (205, 335)
-                    bar = np.interp(left_arm_angle, (205, 335), (650, 100))
+                    per = np.interp(left_arm_angle, (anguloIni, anguloFin), (0, 100))           ## Angulo inicial y final (205, 335)
+                    bar = np.interp(left_arm_angle, (anguloIni, anguloFin), (650, 100))
 
                     color, current_state = utilities().get_performance_bar_color(per)
                     utilities().update_sequence(listSeq= self.listaSeq, currentState= current_state)
@@ -164,7 +164,9 @@ class ejercicios():
         salida.release()
         cv2.destroyAllWindows()
 
-    def pesas_brazoIzquierdo(self, total_reps):                                 ## Total repeticiones
+
+    ### EJERCICIO ÚNICAMENTE DE UN BRAZO
+    def pesas_brazoIzquierdo(self, total_reps):                                 
         cap = cv2.VideoCapture("pexels-michelangelo-buonarroti.mp4")
         
         salida = cv2.VideoWriter('pesas_brazoIzquierdo.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
@@ -233,20 +235,24 @@ class ejercicios():
                 break
 
         time_elapsed = int(time.process_time() - start)
+        nombre = "Ejercicio_Brazo_Izquierdo"
+        alm = je.almacenamiento()
+
+        sol = alm.cargar_soluciones()
+        alm.guardar_resultados(sol, nombre, time_elapsed, count, countF1, countF2, countF3)
         print(time_elapsed , '\n')
         
         print('Fase1: ', countF1 , '\n')
         print('Fase2: ', countF2 , '\n')
         print('Fase3: ', countF3 , '\n')
 
-
         cap.release()
         salida.release()
         cv2.destroyAllWindows()
 
 
-
-    def estiramiento_brazo(self, total_reps):                                 ## Total repeticiones
+    ### EJERCICIO DE ESTIRAMIENTO DE UN BRAZO X SEGUNDOS
+    def estiramiento_brazo(self, total_reps):                                
         cap = cv2.VideoCapture("pexels-los-muertos-crew-7260756-1920x1080-24fps.mp4")
         
         salida = cv2.VideoWriter('estiramiento_brazo_10segundos.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
@@ -342,7 +348,8 @@ class ejercicios():
         cv2.destroyAllWindows()
 
 
-    def pesas_cadaBrazo(self, total_reps):                                 ## Total repeticiones
+    ### EJERCICIO DONDE VA CAMBIANDO EL BRAZO A EJERCITAR
+    def pesas_cadaBrazo(self, total_reps):                                
         #cap = cv2.VideoCapture("pexels-michelangelo-buonarroti-4159061-1080x1920-24fps.mp4")
         
         cap = cv2.VideoCapture(0)
@@ -448,8 +455,8 @@ class ejercicios():
         cv2.destroyAllWindows()
 
 
-
-    def estiramiento(self, total_reps):                                 ## Total repeticiones
+    ### EJERCICIO DONDE SE EJERCITAN DOS MIEMBROS DEL CUERPO A LA VEZ
+    def estiramiento(self, total_reps):                                
         cap = cv2.VideoCapture("pexels-los-muertos-crew-7260756-1920x1080-24fps.mp4")
         #cap = cv2.VideoCapture(0)
         

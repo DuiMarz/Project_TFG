@@ -49,8 +49,8 @@ class almacenamiento():
         ejercicio["cuerpo"] = input('Ingrese la parte del cuerpo que se ejercitará en el ejercicio:')
 
         #ejercicio["posicion"] = input('Ingrese la posicion adecuada para el ejercicio:')
-        #ejercicio["anguloIni"] = int(input('Ingrese el angulo inicial: '))
-        #ejercicio["anguloFin"] = int(input('Ingrese el angulo final: '))
+        ejercicio["anguloIni"] = int(input('Ingrese el angulo inicial: '))
+        ejercicio["anguloFin"] = int(input('Ingrese el angulo final: '))
 
         return ejercicio
 
@@ -74,30 +74,32 @@ class almacenamiento():
             json.dump(resultados, archivo, indent=4)
 
 
-
-
-
-
-    def seleccionar_ejercicio(self, listaEjercicios):
-        nombreEj = input("Ingrese el nombre del ejercicio a ejecutar")
+    def seleccionar_ejercicio(self, nombreEj=None):
+        listaEjercicios = almacenamiento().cargar_ejercicio()
+        
         for dic in listaEjercicios["ejercicios"]:
             if dic["nombre"] == nombreEj:
                 return dic
         return None
     
-    def ejecutar_ejercicio(self, ejercicio):
+    def ejecutar_ejercicio(self, nombre=None):
         exercise = em.ejercicios()
+        if nombre == None:
+            nombre = input("Ingrese el nombre del ejercicio a ejecutar: ")
+        ejercicio = almacenamiento().seleccionar_ejercicio(nombre)
         listaCuerpo = self.partesCuerpo[ejercicio["cuerpo"]]
-        exercise.ejercicio_generico(total_reps=ejercicio["repeticiones"], cuerpo=listaCuerpo)
+        exercise.ejercicio_generico(total_reps=ejercicio["repeticiones"], cuerpo=listaCuerpo, anguloIni=ejercicio["anguloIni"], anguloFin=ejercicio["anguloFin"])
         
 
 
 def main():
     alm = almacenamiento()
     ejercicios = alm.cargar_ejercicio()
-    nuevo_ejercicio = alm.crear_ejercicio()
-    ejercicios["ejercicios"].append(nuevo_ejercicio)
-    alm.guardar_ejercicio(ejercicios)
+    # nuevo_ejercicio = alm.crear_ejercicio()
+    # ejercicios["ejercicios"].append(nuevo_ejercicio)
+    # alm.guardar_ejercicio(ejercicios)
+    ej = alm.seleccionar_ejercicio()
+    alm.ejecutar_ejercicio(ej)
 
 
 if __name__ == "__main__":

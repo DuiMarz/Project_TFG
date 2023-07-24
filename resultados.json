@@ -1,0 +1,28 @@
+{
+    "resultados": [
+        {
+            "nombre": "Ejercicio_Brazo_Izquierdo",
+            "TiempoTotal": 123,
+            "EjCompletos": 2,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 3
+        },
+        {
+            "nombre": "Ejercicio_Brazo_Izquierdo",
+            "TiempoTotal": 124,
+            "EjCompletos": 2,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 3
+        },
+        {
+            "nombre": "Ejercicio_Brazo_Izquierdo",
+            "TiempoTotal": 3,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ]
+}

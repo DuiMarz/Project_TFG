@@ -3,7 +3,16 @@
         {
             "nombre": "Pesas del brazo izquierdo",
             "repeticiones": 5,
-            "cuerpo": " brazoizquierdo"
+            "cuerpo": "brazoizquierdo",
+            "anguloIni": 60,
+            "anguloFin": 170
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "repeticiones": 5,
+            "cuerpo": "brazoderecho",
+            "anguloIni": 60,
+            "anguloFin": 170
         }
     ]
 }
