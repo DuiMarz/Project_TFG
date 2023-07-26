@@ -51,6 +51,7 @@ class utilities():
         cv2.putText(
             img, f"{int(per)} %", (325, 75), cv2.FONT_HERSHEY_PLAIN, 4, color, 4
         )
+
         
     #get_performance_bar_color: Depende del porcentaje de progreso, no solo cambio el color de la barra si no que aprovecho
     # para actualizar el estado en el que estamos en el automata
@@ -95,7 +96,7 @@ class ejercicios():
 
     listaSeq = []
 
-    def ejercicio_generico(self, total_reps, total_series, cuerpo, t_posicion, anguloIni, anguloFin):
+    def ejercicio_generico(self, total_reps, total_series, cuerpo, posicion, t_posicion, anguloIni, anguloFin):
         cap = cv2.VideoCapture("pexels-michelangelo-buonarroti.mp4")
         #salida = cv2.VideoWriter('ejercicio_generico.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
@@ -116,25 +117,33 @@ class ejercicios():
                     break
                 img = cv2.resize(img, (1280, 720))
         
-                is_person_facing_foward = False
+                pos = False
                 img = detector.findPose(img, False)
                 landmark_list = detector.findPosition(img, False)
                 if len(landmark_list) != 0:
 
-                    is_person_facing_foward = detector.persona_de_frente(90)
+                    pos = detector.posicion_correcta(posicion)
                     ##Si posicion=tumbado, añadir método para comprobar que la persona esté tumbada
-                    if not is_person_facing_foward:
+                    if pos:
                         angle = detector.findAngle(img, cuerpo[0], cuerpo[1], cuerpo[2])            ## Parte del cuerpo
 
                         per = np.interp(angle, (anguloIni, anguloFin), (0, 99), period = 360)           ## Angulo inicial y final (205, 335)
                         bar = np.interp(angle, (anguloIni, anguloFin), (650, 100), period = 360)
 
-                        if angle > anguloIni:     #Si anguloIni > anguloFin (e.j. 170 > 60)
-                            per = 0
-                            bar = 650
-                        elif angle < anguloFin:
-                            per = 99
-                            bar = 100
+                        if anguloIni > anguloFin:   #Necesario para poder aplicar el period y que funcione todo correctamente
+                            if angle > anguloIni:    
+                                per = 0
+                                bar = 650
+                            elif angle < anguloFin:
+                                per = 99
+                                bar = 100
+                        else:
+                            if angle < anguloIni:    
+                                per = 0
+                                bar = 650
+                            elif angle > anguloFin:
+                                per = 99
+                                bar = 100
 
                         if per >= 99: 
                             if contando == False:
@@ -153,13 +162,9 @@ class ejercicios():
                         elif per < 99:
                             contando = False
 
-                        
-
                         color, current_state = utilities().get_performance_bar_color(per)
                         utilities().update_sequence(listSeq= self.listaSeq, currentState= current_state)
-                            
-                            
-                        
+                  
                         # When exercise is in start state
                         if per == 0:
                             color = (0, 255, 0)
@@ -171,13 +176,16 @@ class ejercicios():
                             countF2 = rep["fase2"]
                             countF3 = rep["fase3"]
 
-
-
                         utilities().draw_performance_bar(img, per, bar, color, count)
 
                         utilities().display_rep_count(img, count, total_reps, nseries, total_series)
                     else:
-                        print("Ponte de lado, por favor")
+                        if posicion == 0:
+                            print("Ponte de lado, por favor")
+                        elif posicion == 1:
+                            print("Ponte de frente, por favor")
+                        elif posicion == 2:
+                            print("Tumbate de perfil a la cámara, por favor")
                         detector.findAngle(img, 11, 0, 12, True)
 
                 cv2.imshow("Image", img)

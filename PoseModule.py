@@ -56,8 +56,6 @@ class poseDetector():
 
         x3, y3 = self.lmList[p3][1:3]
 
-
-
         # print("x1: ", x1, ", ", "y1:", y1 )
         # print("x2: ", x2, ", ", "y2:", y2 )
         # print("x3: ", x3, ", ", "y3:", y3 )
@@ -75,8 +73,6 @@ class poseDetector():
         theta = np.arccos(np.clip(cos_theta, -1.0, 1.0))
 
         degree = int(180 / np.pi) * theta
-
-
         
         # Calculate the Angle
         # angle = math.degrees(math.atan2(y3 - y2, x3 - x2) -
@@ -104,8 +100,8 @@ class poseDetector():
 
     def persona_de_frente(self, angulo):
         angleCara = self.findAngle(None, 11, 0, 12, False)
-        if angleCara >= (angulo - 10) and angleCara <= (angulo + 10):              ## Suponemos que 90 son más o menos los grados de una persona que está mirando al frente (podemos tomar un angulo cómo referencia para que se ajuste)  
-            return True                                       ## Ampliar para saber en qué dirección estas mirando? (la nariz siempre delante de los hombros?)
+        if angleCara >= (angulo - 10) and angleCara <= (angulo + 10):             
+            return True                                      
         else:
             return False
         
@@ -124,6 +120,17 @@ class poseDetector():
                 return False
         
         return True
+    
+
+    def posicion_correcta(self, posicion):
+        pos = False
+        if posicion == 0:                                   # Persona de lado
+            pos = not (self.persona_de_frente(85))
+        elif posicion == 1:                                 # Persona de frente
+            pos = self.persona_de_frente(85)
+        elif posicion == 2:
+            pos = self.persona_tumbada()
+        return pos
 
     
 
@@ -159,6 +166,7 @@ def main():
         img = detector.findPose(img, True)
         lmList = detector.findPosition(img, False)
         if len(lmList) != 0:
+            
             ### Muestra por pantalla la coordenada z de una landmark ##########
             # Se considera a la cadera el origen de coordenadas. La coordenada será negativa si está entre la coordenada 0 y la cámara,
             # y positiva si se encuentra destrás del origen.

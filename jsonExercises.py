@@ -48,7 +48,8 @@ class almacenamiento():
 
         ejercicio["cuerpo"] = input('Ingrese la parte del cuerpo que se ejercitará en el ejercicio:')
 
-        #ejercicio["posicion"] = input('Ingrese la posicion adecuada para el ejercicio:')
+        ejercicio["posicion"] = int(input('Ingrese la posicion adecuada para el ejercicio:'))
+
         ejercicio["anguloIni"] = int(input('Ingrese el angulo inicial: '))
         ejercicio["anguloFin"] = int(input('Ingrese el angulo final: '))
 
@@ -88,7 +89,7 @@ class almacenamiento():
             nombre = input("Ingrese el nombre del ejercicio a ejecutar: ")
         ejercicio = almacenamiento().seleccionar_ejercicio(nombre)
         listaCuerpo = self.partesCuerpo[ejercicio["cuerpo"]]
-        exercise.ejercicio_generico(total_reps=ejercicio["repeticiones"], total_series=ejercicio["series"], cuerpo=listaCuerpo, 
+        exercise.ejercicio_generico(total_reps=ejercicio["repeticiones"], total_series=ejercicio["series"], cuerpo=listaCuerpo, posicion=ejercicio["posicion"],
                                     t_posicion=ejercicio["tiempoEjercicio"] ,anguloIni=ejercicio["anguloIni"], anguloFin=ejercicio["anguloFin"])
         
 

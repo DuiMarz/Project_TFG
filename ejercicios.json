@@ -6,15 +6,17 @@
             "series": 2,
             "repeticiones": 5,
             "cuerpo": "brazoizquierdo",
+            "posicion": 0,
             "anguloIni": 160,
             "anguloFin": 50
         },
         {
             "nombre": "Pesas del brazo derecho",
-            "tiempoEjercicio": 2,
+            "tiempoEjercicio": 0,
             "series": 2,
             "repeticiones": 2,
             "cuerpo": "brazoderecho",
+            "posicion": 0,
             "anguloIni": 155,
             "anguloFin": 25
         }
