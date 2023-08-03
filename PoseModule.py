@@ -124,11 +124,11 @@ class poseDetector():
 
     def posicion_correcta(self, posicion):
         pos = False
-        if posicion == 0:                                   # Persona de lado
+        if posicion == 0:                                   # Persona de lado (0)
             pos = not (self.persona_de_frente(85))
-        elif posicion == 1:                                 # Persona de frente
+        elif posicion == 1:                                 # Persona de frente (1)
             pos = self.persona_de_frente(85)
-        elif posicion == 2:
+        elif posicion == 2:                                 # Persona tumbada (2)
             pos = self.persona_tumbada()
         return pos
 

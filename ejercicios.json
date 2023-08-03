@@ -2,9 +2,6 @@
     "ejercicios": [
         {
             "nombre": "Pesas del brazo izquierdo",
-            "tiempoEjercicio": 0,
-            "series": 2,
-            "repeticiones": 5,
             "cuerpo": "brazoizquierdo",
             "posicion": 0,
             "anguloIni": 160,
@@ -12,13 +9,24 @@
         },
         {
             "nombre": "Pesas del brazo derecho",
-            "tiempoEjercicio": 0,
-            "series": 2,
-            "repeticiones": 2,
             "cuerpo": "brazoderecho",
             "posicion": 0,
             "anguloIni": 155,
             "anguloFin": 25
+        },
+        {
+            "nombre": "Ejemplo",
+            "cuerpo": "brazoderecho",
+            "posicion": 0,
+            "anguloIni": 0,
+            "anguloFin": 90
+        },
+        {
+            "nombre": "Prueba",
+            "cuerpo": "caderaD",
+            "posicion": 0,
+            "anguloIni": 0,
+            "anguloFin": 20
         }
     ]
 }
