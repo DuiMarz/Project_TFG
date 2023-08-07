@@ -1,0 +1,110 @@
+{
+    "Prueba4": [
+        [
+            "Pesas del brazo derecho",
+            1,
+            1,
+            0,
+            1
+        ],
+        [
+            "Ejemplo",
+            1,
+            6,
+            0,
+            1
+        ],
+        [
+            "Pesas del brazo derecho",
+            1,
+            1,
+            0,
+            1
+        ],
+        [
+            "Ejemplo",
+            1,
+            6,
+            0,
+            4
+        ]
+    ],
+    "Prueba5": [
+        [
+            "Pesas del brazo derecho",
+            1,
+            1,
+            0,
+            1
+        ],
+        [
+            "Ejemplo",
+            1,
+            6,
+            0,
+            1
+        ],
+        [
+            "Pesas del brazo derecho",
+            1,
+            1,
+            0,
+            1
+        ],
+        [
+            "Ejemplo",
+            1,
+            6,
+            0,
+            4
+        ]
+    ],
+    "Prueba_Pesas": [
+        [
+            "Pesas del brazo izquierdo",
+            2,
+            4,
+            0,
+            5
+        ],
+        [
+            "Pesas del brazo derecho",
+            2,
+            2,
+            2,
+            3
+        ]
+    ],
+    "PruebaSesion2": [
+        [
+            "Ejemplo",
+            1,
+            1,
+            0,
+            1
+        ],
+        [
+            "Pesas del brazo derecho",
+            1,
+            1,
+            0,
+            1
+        ]
+    ],
+    "Prueba3": [
+        [
+            "Pesas del brazo derecho",
+            5,
+            3,
+            0,
+            5
+        ],
+        [
+            "Ejemplo",
+            5,
+            3,
+            0,
+            5
+        ]
+    ]
+}

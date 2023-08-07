@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import font as tkfont
 import jsonExercises as je
 import AITrainer as ait
+from datetime import datetime
 
 
 
@@ -23,23 +24,16 @@ class TrainerApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        # for F in (StartPage):
-        #     page_name = F.__name__
-        #     frame = F(container, self) # **
-        #     self.frames[page_name] = frame # **
-
-        #     # put all of the pages in the same location;
-        #     # the one on the top of the stacking order
-        #     # will be the one that is visible.
-        #     frame.grid(row=0, column=0, sticky="nsew")
 
         self.frames["StartPage"] = StartPage(parent=container, controller=self)
         self.frames["Sesion"] = Sesion(parent=container, controller=self)
         self.frames["Editor"] = Editor(parent=container, controller=self)
+        self.frames["InicioSesion"] = InicioSesion(parent=container, controller=self)
 
         self.frames["StartPage"].grid(row=0, column=0, sticky="nsew")
         self.frames["Sesion"].grid(row=0, column=0, sticky="nsew")
         self.frames["Editor"].grid(row=0, column=0, sticky="nsew")
+        self.frames["InicioSesion"].grid(row=0, column=0, sticky="nsew")
         self.show_frame("StartPage")
 
      def show_frame(self, page_name):
@@ -53,16 +47,83 @@ class StartPage(tk.Frame):
 
         tk.Frame.__init__(self, parent) 
         self.controller = controller 
-        label = tk.Label(self, text="This is the start page",
-                         font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
 
-        button1 = tk.Button(self, text="Organizar sesión",pady= 10,
-                            command=lambda: controller.show_frame("Sesion"))
-        button2 = tk.Button(self, text="Crear ejercicio", pady=10,
-                            command=lambda: controller.show_frame("Editor"))
-        button1.pack(side=tk.TOP)
-        button2.pack(side=tk.TOP)
+        label = tk.Label(self, text="Proyecto TFG",
+                         font=controller.title_font, pady=20, width=55)
+        label.grid(row=0, column=0)
+
+        button_sesion = tk.Button(self, text="Crear sesión", pady= 10,
+                            command=lambda: controller.show_frame("Sesion"), width=15)
+        button_ejercicio = tk.Button(self, text="Crear ejercicio", pady=10,
+                            command=lambda: controller.show_frame("Editor"), width=15)
+        button_listaSesiones = tk.Button(self, text="Elegir sesión de ejercicios", pady=10,
+                            command=lambda: controller.show_frame("InicioSesion"), width=20)
+
+        button_ejercicio.grid(row=1, column=0, pady=20)
+        button_sesion.grid(row=2, column=0, pady=20)
+        button_listaSesiones.grid(row=3, column=0, pady=20 )
+
+
+class InicioSesion(tk.Frame):
+
+    opciones=[]
+    alm = je.almacenamiento()
+    
+
+    def on_configure(self, event):
+        self.canvas.configure(scrollregion=self.canvas.bbox('all'))
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller  
+
+        titulo = tk.Label(self, text="Iniciar sesión de ejercicios", font=controller.title_font, width=55)
+        titulo.grid(row=0, column=0, columnspan=10, pady=20)
+
+        self.canvas = tk.Canvas(self, width=250)
+        self.canvas.grid(row=1, column=4, rowspan=10, columnspan=2)
+
+        radio_frame = tk.Frame(self.canvas, padx=20, pady=20)
+        cb_scrollbar = tk.Scrollbar(radio_frame, command=self.canvas.yview)
+        cb_scrollbar.pack(side=tk.RIGHT, fill='y', padx=15)
+        self.canvas.configure(yscrollcommand=cb_scrollbar.set)
+
+        self.canvas.create_window((0, 0), window=radio_frame, anchor='nw')
+
+
+        dic = self.alm.cargar_sesiones()
+
+        for d in dic:
+            self.opciones.append(d)
+
+        self.op_selec = tk.StringVar()
+  
+        for opcion in self.opciones:        
+            radio_opcion = tk.Radiobutton(radio_frame, text=opcion, variable=self.op_selec, value=opcion)
+            radio_opcion.pack(anchor='w')
+
+        button_comenzar = tk.Button(self, text="Comenzar sesión de ejercicios", command=self.iniciarSesion)
+        button_comenzar.grid(row = 11, column=4)
+
+        button_volver = tk.Button(self, text="Volver al inicio", command=lambda: controller.show_frame("StartPage"))
+        button_volver.grid(row=12, column=4, pady=20)
+
+        radio_frame.bind('<Configure>', self.on_configure)
+
+
+    def iniciarSesion(self):
+        sesion = self.op_selec.get()
+        if(sesion):
+            dicSesiones = self.alm.cargar_sesiones()
+            listaEjercicios = dicSesiones[sesion]
+            now = datetime.now()
+            horaActual = now.strftime('%H:%M')
+            nombreSesionActual = sesion + "-" + horaActual
+            ait.comenzar_sesion(listaEjercicios, nombreSesionActual)
+            
+
+
+      
 
 class Editor(tk.Frame):
 
@@ -109,11 +170,11 @@ class Editor(tk.Frame):
 
         boton_regresoE = tk.Button(self, text="Volver al inicio",
                            command=lambda: controller.show_frame("StartPage"))
-        boton_regresoE.grid(row=8, column=1)
+        boton_regresoE.grid(row=9, column=1)
 
         boton_crear = tk.Button(self, text="Crear ejercicio",
                            command=self.guardar_ejercicio)
-        boton_crear.grid(row=8, column=2)
+        boton_crear.grid(row=9, column=2)
 
 
     def guardar_ejercicio(self):
@@ -128,12 +189,8 @@ class Editor(tk.Frame):
             self.alm.guardar_ejercicio(NuevoEjercicio)
             self.controller.show_frame("StartPage")
 
-            
-
-
 
 class Sesion(tk.Frame):
-
 
     opciones = []
 
@@ -190,17 +247,17 @@ class Sesion(tk.Frame):
             radio_opcion.pack(anchor='w')
 
 
-        btn_imprimir = tk.Button(self, text="Empezar sesión", command=self.iniciar_sesion)
-        btn_imprimir.grid(row=2, column=3)
+        btn_sesion = tk.Button(self, text="Guardar sesión", command=self.guardar_sesion)
+        btn_sesion.grid(row=4, column=3, columnspan=2)
 
 
-        button = tk.Button(self, text="Go to the start page",
+        button = tk.Button(self, text="Volver al inicio",
                            command=lambda: controller.show_frame("StartPage"))
-        button.grid(row=2, column=4)
+        button.grid(row=6, column=4, padx=20)
 
         boton_add_to_list = tk.Button(self, text="Añadir a la lista",
-                           command=self.listaEjercicios)
-        boton_add_to_list.grid(row=2, column=2)
+                           command=self.listaEjercicios, width=20)
+        boton_add_to_list.grid(row=8, column=0, columnspan=2)
 
         boton_subir = tk.Button(self, text="Subir elemento",
                            command=self.subir_elemento)
@@ -212,7 +269,7 @@ class Sesion(tk.Frame):
 
         boton_eliminar = tk.Button(self,text="Eliminar elemento",
                            command=self.eliminar_elemento)
-        boton_eliminar.grid(row=3, column=2)
+        boton_eliminar.grid(row=2, column=2)
 
         self.series = tk.IntVar()
         etiqueta_series = tk.Label(self, text="Nº de series")
@@ -240,9 +297,9 @@ class Sesion(tk.Frame):
 
         self.nomSesion = tk.StringVar()
         etiqueta_entry = tk.Label(self, text="Escribe el nombre de la sesión:")
-        etiqueta_entry.grid(row=6, column=3, columnspan=2, padx=10, sticky=tk.EW)
+        etiqueta_entry.grid(row=2, column=3, columnspan=2, padx=10, sticky=tk.EW)
         nombre_ejercicio = tk.Entry(self, textvariable=self.nomSesion)
-        nombre_ejercicio.grid(row=7, column=3, columnspan=2)
+        nombre_ejercicio.grid(row=3, column=3, columnspan=2)
 
        
         radio_frame.bind('<Configure>', self.on_configure)
@@ -284,7 +341,8 @@ class Sesion(tk.Frame):
                 self.ejerciciosSesion[selected_index+1] = self.ejerciciosSesion[selected_index]
                 self.ejerciciosSesion[selected_index] = aux
 
-
+#La sesión se guarda como una lista compuesta por el nombre (0), las repeticiones (1), las series (2), el tiempo en el que 
+#mantener la posición (3) y el tiempo de desacnso tras la actividad (4)
     def listaEjercicios(self):
             nomSeleccionada = self.op_selec.get()
             if(nomSeleccionada):
@@ -297,20 +355,21 @@ class Sesion(tk.Frame):
                 self.ejerciciosSesion.append(ejercicio)
 
     
-    def iniciar_sesion(self):
-        # listaEjercicios = []
-        # for i, var in enumerate(self.variables):
-        #     if(var.get()):
-        #         listaEjercicios.append(self.opciones[i])
-        # print(listaEjercicios)
-        # ait.comenzar_sesion(listaEjercicios)
-        print(self.ejerciciosSesion)
+    def guardar_sesion(self):
+
+        nomSesion = self.nomSesion.get().strip()
+        listaSesion = self.ejerciciosSesion
+        if nomSesion:
+            sesion = {nomSesion: listaSesion}
+            self.alm.guardar_sesion(sesion, nomSesion)
+            self.controller.show_frame("StartPage")
 
 
 
 
 def main():
     app = TrainerApp()
+    app.title("TFG")
     app.mainloop()
 
 if __name__ == "__main__":

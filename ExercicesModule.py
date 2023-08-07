@@ -96,7 +96,7 @@ class ejercicios():
 
     listaSeq = []
 
-    def ejercicio_generico(self, total_reps, total_series, cuerpo, posicion, t_posicion, anguloIni, anguloFin):
+    def ejercicio_generico(self, total_reps, total_series, cuerpo, posicion, t_posicion, anguloIni, anguloFin, nombreEj, nombreSesion):
         cap = cv2.VideoCapture("pexels-michelangelo-buonarroti.mp4")
         #salida = cv2.VideoWriter('ejercicio_generico.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
@@ -204,6 +204,8 @@ class ejercicios():
         print('Fase2: ', countF2 , '\n')
         print('Fase3: ', countF3 , '\n')
 
+        alm = je.almacenamiento()
+        alm.guardar_resultados(nombreEj, nombreSesion, time_elapsed, ejCompleto, countF1, countF2, countF3)
 
         cap.release()
         #salida.release()
@@ -269,7 +271,7 @@ class ejercicios():
 
                     utilities().draw_performance_bar(img, per, bar, color, count)
 
-                    utilities().display_rep_count(img, count, total_reps)
+                    utilities().display_rep_count(img, count, total_reps, 2, 4)
                 else:
                     print("Ponte de lado, por favor")
                     detector.findAngle(img, 11, 0, 12, True)
@@ -283,8 +285,8 @@ class ejercicios():
         nombre = "Ejercicio_Brazo_Izquierdo"
         alm = je.almacenamiento()
 
-        sol = alm.cargar_soluciones()
-        alm.guardar_resultados(sol, nombre, time_elapsed, count, countF1, countF2, countF3)
+       
+        alm.guardar_resultados(nombre, time_elapsed, count, countF1, countF2, countF3)
         print(time_elapsed , '\n')
         
         print('Fase1: ', countF1 , '\n')

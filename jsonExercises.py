@@ -1,6 +1,8 @@
 import cv2
 import json
 import ExercicesModule as em
+from datetime import date
+
 
 class almacenamiento():
 
@@ -13,6 +15,17 @@ class almacenamiento():
         "caderaI": [12, 24, 26]
     }
 
+    
+
+    def cargar_sesiones(self):
+        try:
+            with open('sesiones.json', 'r') as archivo:
+                sesiones = json.load(archivo)
+        except FileNotFoundError:
+            sesiones = {}
+        
+        return sesiones
+
     def cargar_ejercicio(self):
         try:
             with open('ejercicios.json', 'r') as archivo:
@@ -24,10 +37,12 @@ class almacenamiento():
     
     def cargar_soluciones(self):
         try:
-            with open('resultados.json', 'r') as archivo:
+            fecha = date.today().strftime('%d-%m-%y')
+            nombreArchivo = "resultados_" + fecha + ".json"
+            with open(nombreArchivo, 'r') as archivo:
                 resultados = json.load(archivo)
         except FileNotFoundError:
-            resultados = {"resultados" :[]}
+            resultados = {}
         
         return resultados
 
@@ -54,6 +69,14 @@ class almacenamiento():
         ejercicio["anguloFin"] = angFin
 
         return ejercicio
+    
+    def guardar_sesion(self, sesion, nomSesion):
+        dicSesiones = self.cargar_sesiones()     
+        if nomSesion not in dicSesiones:
+            dicSesiones.update(sesion)
+            with open('sesiones.json', 'w') as archivo:
+                json.dump(dicSesiones, archivo, indent=4)
+    
 
     def guardar_ejercicio(self, ejercicio):
 
@@ -71,38 +94,37 @@ class almacenamiento():
                 json.dump(dicEjercicios, archivo, indent=4)
 
 
-    def guardar_resultados(self, resultados, nombre, tiempo, total, F1, F2, F3):
-        resultado = {}
-        resultado["nombre"] = nombre
-        resultado["TiempoTotal"] = tiempo
-        resultado["EjCompletos"] = total
-        resultado["EjF1"] = F1
-        resultado["EjF2"] = F2
-        resultado["EjF3"] = F3
+    def guardar_resultados(self, nombreEj, nombreSesion, tiempo, total, F1, F2, F3):
+        resultados = self.cargar_soluciones()
+        res = {}
+        res["nombre"] = nombreEj
+        res["TiempoTotal"] = tiempo
+        res["EjCompletos"] = total
+        res["EjF1"] = F1
+        res["EjF2"] = F2
+        res["EjF3"] = F3
 
-        resultados["resultados"].append(resultado)
+        nomS = nombreSesion
+        if(nomS not in resultados):
+            resultados[nomS] = [res]
+        else:
+            resultados[nomS].append(res)
 
-        with open('resultados.json', 'w') as archivo:
+
+        fecha = date.today().strftime('%d-%m-%y')
+        nombreArchivo = "resultados_" + fecha + ".json"
+        with open(nombreArchivo, 'w') as archivo:
             json.dump(resultados, archivo, indent=4)
 
 
     def seleccionar_ejercicio(self, nombreEj=None):
-        listaEjercicios = almacenamiento().cargar_ejercicio()
+        listaEjercicios = self.cargar_ejercicio()
         
         for dic in listaEjercicios["ejercicios"]:
             if dic["nombre"] == nombreEj:
                 return dic
         return None
     
-    def ejecutar_ejercicio(self, nombre=None):
-        exercise = em.ejercicios()
-        if nombre == None:
-            nombre = input("Ingrese el nombre del ejercicio a ejecutar: ")
-        ejercicio = almacenamiento().seleccionar_ejercicio(nombre)
-        listaCuerpo = self.partesCuerpo[ejercicio["cuerpo"]]
-        exercise.ejercicio_generico(total_reps=ejercicio["repeticiones"], total_series=ejercicio["series"], cuerpo=listaCuerpo, posicion=ejercicio["posicion"],
-                                    t_posicion=ejercicio["tiempoEjercicio"] ,anguloIni=ejercicio["anguloIni"], anguloFin=ejercicio["anguloFin"])
-        
 
 
 def main():
