@@ -33,7 +33,7 @@ def crear_sesion():
         listaEj.append(nombreEjercicio)
     return listaEj
 
-def comenzar_sesion(listaEj, nomSesion):
+def comenzar_sesion(listaEj, nomSesion, nomUsuario):
 
     _ = input("Dale a ENTER para continuar")
     if(listaEj != []):
@@ -43,13 +43,14 @@ def comenzar_sesion(listaEj, nomSesion):
             series = ejercicio[2]
             t_pos = ejercicio[3]
             descanso = ejercicio[4]
-            ejecutar_ejercicio(nombre=nomEj, repes=repes, series=series, tiempo_pos=t_pos, nomSesion=nomSesion)
+            ejecutar_ejercicio(nombre=nomEj, repes=repes, series=series, tiempo_pos=t_pos, 
+                               nomSesion=nomSesion, nomUsuario=nomUsuario)
             print(f"Descansemos {descanso} segunditos")
             time.sleep(descanso)
     else: 
         print("Lista vacia")
 
-def ejecutar_ejercicio(nombre=None, repes=1, series=1, tiempo_pos=0, nomSesion="default"):
+def ejecutar_ejercicio(nombre=None, repes=1, series=1, tiempo_pos=0, nomSesion="default", nomUsuario="usuario"):
     #exercise = em.ejercicios()
     
     if nombre == None:
@@ -58,7 +59,7 @@ def ejecutar_ejercicio(nombre=None, repes=1, series=1, tiempo_pos=0, nomSesion="
     listaCuerpo = alm.partesCuerpo[ejercicio["cuerpo"]]
     ejercicios.ejercicio_generico(total_reps=repes, total_series=series, cuerpo=listaCuerpo, posicion=ejercicio["posicion"],
                                 t_posicion=tiempo_pos ,anguloIni=ejercicio["anguloIni"], anguloFin=ejercicio["anguloFin"],
-                                nombreEj=nombre, nombreSesion=nomSesion)
+                                nombreEj=nombre, nombreSesion=nomSesion, nomUsuario=nomUsuario)
         
 
 

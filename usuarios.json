@@ -1,0 +1,19 @@
+{
+    "users": {
+        "prueba": "aaa",
+        "Prueba3": "abc",
+        "Prueba4": "abc",
+        "PruebaBorrado": "1234",
+        "PruebaBorrado1": "1234",
+        "dfddf": "dfdfdf",
+        "ssdsd": "asad",
+        "sds": "fcfffff",
+        "Hola": "Mundo",
+        "Cacao": "conLeche"
+    },
+    "admins": {
+        "admin1": "1234",
+        "admin2": "5678",
+        "PruebaBorrado": "1234"
+    }
+}

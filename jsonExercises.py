@@ -2,6 +2,7 @@ import cv2
 import json
 import ExercicesModule as em
 from datetime import date
+import os
 
 
 class almacenamiento():
@@ -46,6 +47,14 @@ class almacenamiento():
         
         return resultados
 
+    def cargar_usuarios(self):
+        try:
+            with open("usuarios.json", 'r') as archivo:
+                users = json.load(archivo)
+        except FileNotFoundError:
+            users = {"users":{}, "admins":{}}
+        
+        return users
 
     def crear_ejercicio(self, nombre, cuerpo, pos, angIni, angFin):
         ejercicio = {}
@@ -76,7 +85,7 @@ class almacenamiento():
             dicSesiones.update(sesion)
             with open('sesiones.json', 'w') as archivo:
                 json.dump(dicSesiones, archivo, indent=4)
-    
+
 
     def guardar_ejercicio(self, ejercicio):
 
@@ -94,8 +103,7 @@ class almacenamiento():
                 json.dump(dicEjercicios, archivo, indent=4)
 
 
-    def guardar_resultados(self, nombreEj, nombreSesion, tiempo, total, F1, F2, F3):
-        resultados = self.cargar_soluciones()
+    def guardar_resultados(self, nombreEj, nombreSesion, tiempo, total, F1, F2, F3, nomUsuario):
         res = {}
         res["nombre"] = nombreEj
         res["TiempoTotal"] = tiempo
@@ -104,16 +112,28 @@ class almacenamiento():
         res["EjF2"] = F2
         res["EjF3"] = F3
 
+        nombreCarpeta = nomUsuario + "_Datos"
+        rutaActual = os.path.dirname(os.path.abspath(__file__))
+        carpetaDestino = os.path.join(rutaActual, "Datos", nombreCarpeta)
+        fecha = date.today().strftime('%d-%m-%y')
+        nombreArchivo = nomUsuario + "_" + "resultados_" + fecha + ".json"
+        rutaFinal = os.path.join(carpetaDestino, nombreArchivo)
+
+        os.makedirs(carpetaDestino, exist_ok=True)
+
+        try:
+            with open(rutaFinal, 'r') as archivo:
+                resultados = json.load(archivo)
+        except FileNotFoundError:
+            resultados = {}
+        
         nomS = nombreSesion
         if(nomS not in resultados):
             resultados[nomS] = [res]
         else:
             resultados[nomS].append(res)
-
-
-        fecha = date.today().strftime('%d-%m-%y')
-        nombreArchivo = "resultados_" + fecha + ".json"
-        with open(nombreArchivo, 'w') as archivo:
+     
+        with open(rutaFinal, 'w') as archivo:
             json.dump(resultados, archivo, indent=4)
 
 

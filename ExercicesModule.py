@@ -96,7 +96,8 @@ class ejercicios():
 
     listaSeq = []
 
-    def ejercicio_generico(self, total_reps, total_series, cuerpo, posicion, t_posicion, anguloIni, anguloFin, nombreEj, nombreSesion):
+    def ejercicio_generico(self, total_reps, total_series, cuerpo, posicion, t_posicion, anguloIni, anguloFin, 
+                           nombreEj, nombreSesion, nomUsuario):
         cap = cv2.VideoCapture("pexels-michelangelo-buonarroti.mp4")
         #salida = cv2.VideoWriter('ejercicio_generico.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
@@ -205,7 +206,7 @@ class ejercicios():
         print('Fase3: ', countF3 , '\n')
 
         alm = je.almacenamiento()
-        alm.guardar_resultados(nombreEj, nombreSesion, time_elapsed, ejCompleto, countF1, countF2, countF3)
+        alm.guardar_resultados(nombreEj, nombreSesion, time_elapsed, ejCompleto, countF1, countF2, countF3, nomUsuario)
 
         cap.release()
         #salida.release()

@@ -106,5 +106,28 @@
             0,
             5
         ]
+    ],
+    "PruebaLista": [
+        [
+            "Ejemplo",
+            1,
+            1,
+            0,
+            1
+        ],
+        [
+            "Pesas del brazo derecho",
+            1,
+            1,
+            0,
+            1
+        ],
+        [
+            "Prueba",
+            1,
+            1,
+            0,
+            1
+        ]
     ]
 }
