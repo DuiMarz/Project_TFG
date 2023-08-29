@@ -8,12 +8,12 @@ import os
 class almacenamiento():
 
     partesCuerpo= {
-        "brazoderecho": [11,13,15],
-        "brazoizquierdo": [12, 14, 16],
-        "piernaderecha": [23, 25, 27],
-        "piernaizquierda": [24, 26, 28],
-        "caderaD": [11, 23, 25],
-        "caderaI": [12, 24, 26]
+        "Brazo derecho (11,13,15)": [11,13,15],
+        "Brazo izquierdo (12,14,16)": [12, 14, 16],
+        "Pierna derecha (23,25,27)": [23, 25, 27],
+        "Pierna izquierda (24,26,28)": [24, 26, 28],
+        "CaderaD (11,23,25)": [11, 23, 25],
+        "CaderaI (12,24,26)": [12, 24, 26]
     }
 
     
@@ -32,7 +32,7 @@ class almacenamiento():
             with open('ejercicios.json', 'r') as archivo:
                 ejercicios = json.load(archivo)
         except FileNotFoundError:
-            ejercicios = {"ejercicios" :[]}
+            ejercicios = {}
         
         return ejercicios
     
@@ -56,24 +56,11 @@ class almacenamiento():
         
         return users
 
-    def crear_ejercicio(self, nombre, cuerpo, pos, angIni, angFin):
+    def crear_ejercicio(self, cuerpo, pos, angIni, angFin):
         ejercicio = {}
 
-        ejercicio["nombre"] = nombre
-        #ejercicio["descripcion"] = input('Ingrese una descripción del ejercicio: ')
-
-        #ejercicio['TiempoMax'] = int(input('Ingrese el tiempo del ejercicio (segundos): '))
-
-        #ejercicio["TiempoEjercicio"] = int(input('Ingrese el tiempo en el que tiene que mantener una posición (segundos): '))
-
-        #ejercicio["series"] = int(input('Ingrese el numero de series: '))
-
-        #ejercicio["repeticiones"] = int(input('Ingrese el numero de repeticiones: '))
-
         ejercicio["cuerpo"] = cuerpo
-
         ejercicio["posicion"] = pos
-
         ejercicio["anguloIni"] = angIni
         ejercicio["anguloFin"] = angFin
 
@@ -87,18 +74,11 @@ class almacenamiento():
                 json.dump(dicSesiones, archivo, indent=4)
 
 
-    def guardar_ejercicio(self, ejercicio):
+    def guardar_ejercicio(self, nombre, ejercicio):
 
-        mismoNombre = False
-        nomNuevoEj = ejercicio["nombre"]
         dicEjercicios = self.cargar_ejercicio()
-        for dic in dicEjercicios["ejercicios"]:
-            if  nomNuevoEj == dic["nombre"]: 
-                mismoNombre = True
-                break
-
-        if not mismoNombre:
-            dicEjercicios["ejercicios"].append(ejercicio)
+        if nombre not in dicEjercicios:
+            dicEjercicios[nombre] = ejercicio
             with open('ejercicios.json', 'w') as archivo:
                 json.dump(dicEjercicios, archivo, indent=4)
 
@@ -139,11 +119,8 @@ class almacenamiento():
 
     def seleccionar_ejercicio(self, nombreEj=None):
         listaEjercicios = self.cargar_ejercicio()
-        
-        for dic in listaEjercicios["ejercicios"]:
-            if dic["nombre"] == nombreEj:
-                return dic
-        return None
+        ej = listaEjercicios[nombreEj]
+        return ej
     
 
 

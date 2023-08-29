@@ -9,6 +9,7 @@ import os
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+import cv2
 
 
 
@@ -72,6 +73,32 @@ class TrainerApp(tk.Tk):
         ini = self.frames["GraficasResultadosAdmin"]
         ini.actu_lista()
 
+    def list_ports(self):
+    # """
+    # Test the ports and returns a tuple with the available ports and the ones that are working.
+    # """
+        non_working_ports = []
+        dev_port = 0
+        working_ports = []
+        available_ports = []
+        while len(non_working_ports) < 6: # if there are more than 5 non working ports stop the testing. 
+            camera = cv2.VideoCapture(dev_port)
+            if not camera.isOpened():
+                non_working_ports.append(dev_port)
+                print("Port %s is not working." %dev_port)
+            else:
+                is_reading, img = camera.read()
+                w = camera.get(3)
+                h = camera.get(4)
+                if is_reading:
+                    print("Port %s is working and reads images (%s x %s)" %(dev_port,h,w))
+                    working_ports.append((dev_port,h,w))
+                else:
+                    print("Port %s for camera ( %s x %s) is present but does not reads." %(dev_port,h,w))
+                    available_ports.append(dev_port)
+            dev_port +=1
+        return available_ports,working_ports,non_working_ports
+
 
 class Inicio_Registro(tk.Frame): 
     def __init__(self, parent, controller):
@@ -79,7 +106,7 @@ class Inicio_Registro(tk.Frame):
         tk.Frame.__init__(self, parent) 
         self.controller = controller 
 
-        labelIR = tk.Label(self, text="Proyecto TFG",
+        labelIR = tk.Label(self, text="Aplicación interactiva para rehabilitación y fisioterapia",
                          font=controller.title_font, pady=20, width=55)
         labelIR.grid(row=0, column=0)
 
@@ -238,7 +265,7 @@ class StartPageUser(tk.Frame):
         tk.Frame.__init__(self, parent) 
         self.controller = controller 
 
-        label = tk.Label(self, text="Proyecto TFG",
+        label = tk.Label(self, text="Aplicación interactiva para rehabilitación y fisioterapia",
                          font=controller.title_font, pady=20, width=55)
         label.grid(row=0, column=0)
 
@@ -264,6 +291,7 @@ class StartPageUser(tk.Frame):
         self.controller.show_frame("GraficasResultadosUser")
 
 
+
 class StartPageAdmin(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -271,7 +299,7 @@ class StartPageAdmin(tk.Frame):
         tk.Frame.__init__(self, parent) 
         self.controller = controller 
 
-        label = tk.Label(self, text="Proyecto TFG",
+        label = tk.Label(self, text="Aplicación interactiva para rehabilitación y fisioterapia",
                          font=controller.title_font, pady=20, width=55)
         label.grid(row=0, column=0)
 
@@ -351,7 +379,16 @@ class GraficasResultadosUser(tk.Frame):
                                   font=tkfont.NORMAL, border=3)
         button_graficaFases.grid(row=3, column=4, pady=5)
 
-    
+    def autolabel(self, rects, ax):
+    #"""Funcion para agregar una etiqueta con el valor en cada barra"""
+        for rect in rects:
+            height = rect.get_height()
+            ax.annotate('{}'.format(height),
+                        xy=(rect.get_x() + rect.get_width() / 2, height),
+                        xytext=(0, 3),  # 3 points vertical offset
+                        textcoords="offset points",
+                        ha='center', va='bottom')
+            
     def graficaTiempos(self):
         selected_index = self.listboxSesiones.curselection()
         listaSegundos = []
@@ -368,7 +405,10 @@ class GraficasResultadosUser(tk.Frame):
             #Colocamos una etiqueta en el eje X
             ax.set_title('Tiempo total por ejercicio')
             #Creamos la grafica de barras utilizando ejercicios como eje X y segundos como eje y.
-            plt.bar(listaNombres, listaSegundos)
+            rects = plt.bar(listaNombres, listaSegundos)
+
+            self.autolabel(rects, ax)
+            fig.tight_layout()
             #Finalmente mostramos la grafica con el metodo show()
             plt.show()
 
@@ -391,9 +431,9 @@ class GraficasResultadosUser(tk.Frame):
             x = np.arange(len(listaNombres))
             width = 0.25
 
-            plt.bar(x - width, listaF1, width=width, label='Fase 1')
-            plt.bar(x, listaF2, width=width, label='Fase 2')
-            plt.bar(x + width, listaF3, width=width, label='Fase 3')
+            plt.bar(x - width, listaF1, width=width, label='(0,30]')
+            plt.bar(x, listaF2, width=width, label='(30,60]')
+            plt.bar(x + width, listaF3, width=width, label='(60, 100)')
             #Colocamos una etiqueta en el eje Y
             ax.set_ylabel('Intentos fallidos')
             #Colocamos una etiqueta en el eje X
@@ -508,6 +548,17 @@ class GraficasResultadosAdmin(tk.Frame):
         button_graficaFases.grid(row=7, column=3, pady=5)
 
 
+    def autolabel(self, rects, ax):
+    #"""Funcion para agregar una etiqueta con el valor en cada barra"""
+        for rect in rects:
+            height = rect.get_height()
+            ax.annotate('{}'.format(height),
+                        xy=(rect.get_x() + rect.get_width() / 2, height),
+                        xytext=(0, 3),  # 3 points vertical offset
+                        textcoords="offset points",
+                        ha='center', va='bottom')
+
+
 
     def graficaTiempos(self):
         selected_index = self.listboxSesiones.curselection()
@@ -525,7 +576,10 @@ class GraficasResultadosAdmin(tk.Frame):
             #Colocamos una etiqueta en el eje X
             ax.set_title('Tiempo total por ejercicio')
             #Creamos la grafica de barras utilizando ejercicios como eje X y segundos como eje y.
-            plt.bar(listaNombres, listaSegundos)
+            rects = plt.bar(listaNombres, listaSegundos)
+
+            self.autolabel(rects, ax)
+            fig.tight_layout()
             #Finalmente mostramos la grafica con el metodo show()
             plt.show()
 
@@ -548,9 +602,9 @@ class GraficasResultadosAdmin(tk.Frame):
             x = np.arange(len(listaNombres))
             width = 0.25
 
-            plt.bar(x - width, listaF1, width=width, label='Fase 1')
-            plt.bar(x, listaF2, width=width, label='Fase 2')
-            plt.bar(x + width, listaF3, width=width, label='Fase 3')
+            plt.bar(x - width, listaF1, width=width, label='N1 (0,30]')
+            plt.bar(x, listaF2, width=width, label='N2 (30,60]')
+            plt.bar(x + width, listaF3, width=width, label='N3 (60, 100)')
             #Colocamos una etiqueta en el eje Y
             ax.set_ylabel('Intentos fallidos')
             #Colocamos una etiqueta en el eje X
@@ -610,12 +664,13 @@ class InicioSesionEj(tk.Frame):
 
 
     alm = je.almacenamiento()
+    camaras=[]
     
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller  
 
-        titulo = tk.Label(self, text="Iniciar sesión de ejercicios", font=controller.title_font, width=55)
+        titulo = tk.Label(self, text="Empezar sesión de ejercicios", font=controller.title_font, width=55)
         titulo.grid(row=0, column=0, columnspan=10, pady=20)
 
         list_frame = tk.Frame(self, padx=20)
@@ -623,19 +678,31 @@ class InicioSesionEj(tk.Frame):
         yscrollbar = tk.Scrollbar(list_frame, orient=tk.VERTICAL)
         hscrollbar = tk.Scrollbar(list_frame, orient=tk.HORIZONTAL)
         # Vincularla con la lista.
-        self.listbox = tk.Listbox(list_frame, yscrollcommand=yscrollbar.set, xscrollcommand=hscrollbar.set, width=37, height=15)
+        self.listbox = tk.Listbox(list_frame, yscrollcommand=yscrollbar.set, xscrollcommand=hscrollbar.set, width=37, height=15
+                                  , exportselection=False)
         yscrollbar.config(command=self.listbox.yview)
         hscrollbar.config(command=self.listbox.xview)
         # Ubicarla a la derecha.
         yscrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         hscrollbar.pack(side=tk.BOTTOM, fill=tk.X)
         self.listbox.pack(side=tk.LEFT, fill="both", expand=True)
-        list_frame.grid(row=1, column=4, pady=10, columnspan=2)
+        list_frame.grid(row=1, column=4, pady=10, columnspan=2, rowspan=5)
 
         dic = self.alm.cargar_sesiones()
 
         for d in dic.keys():
             self.listbox.insert(tk.END, d)
+
+        av,self.work,nwork = self.controller.list_ports()
+
+        for w in self.work:
+            cam= str(w[0]) + " (" + str(w[1]) + " x " + str(w[2]) +")"
+            self.camaras.append(cam)
+
+        etiqueta_camara= tk.Label(self, text="Elegir cámara:", font=tkfont.NORMAL, width=10)
+        etiqueta_camara.grid(row=1, column=6, columnspan=3, padx=10, sticky=tk.EW)
+        self.camara_combobox = ttk.Combobox(self, state="readonly", values = self.camaras, font=tkfont.NORMAL)
+        self.camara_combobox.grid(row=2, column=6, columnspan=3, padx=10, sticky=tk.EW)
 
         button_comenzar = tk.Button(self, text="Comenzar sesión de ejercicios", command=self.iniciarSesionEj, 
                                     font=tkfont.NORMAL, border=3)
@@ -651,14 +718,16 @@ class InicioSesionEj(tk.Frame):
         aux = self.listbox.curselection()
         sesion = self.listbox.get(aux)
         nombreUsuario = self.controller.get_sesionActual()
+        index = self.camara_combobox.current()
 
-        if(aux):
+        if(aux and index != -1):
             dicSesiones = self.alm.cargar_sesiones()
             listaEjercicios = dicSesiones[sesion]
             now = datetime.now()
             horaActual = now.strftime('%H:%M')
             nombreSesionActual = sesion + "-" + horaActual
-            ait.comenzar_sesion(listaEjercicios, nombreSesionActual, nombreUsuario)
+            indexCam = self.work[index][0]
+            ait.comenzar_sesion(listaEjercicios, nombreSesionActual, nombreUsuario, indexCam)
                  
 
 class Editor(tk.Frame):
@@ -683,8 +752,9 @@ class Editor(tk.Frame):
 
         etiqueta_cuerpocb= tk.Label(self, text="Parte del cuerpo a ejercitar:", font=tkfont.NORMAL)
         etiqueta_cuerpocb.grid(row=2, column=1, columnspan=2, padx=10, sticky=tk.EW)
-        self.cuerpo_combobox = ttk.Combobox(self, state="readonly", values = [ "brazoderecho","brazoizquierdo", "piernaderecha", "piernaizquierda",
-                                                                          "caderaD", "caderaI"], font=tkfont.NORMAL)
+        self.cuerpo_combobox = ttk.Combobox(self, state="readonly", values = [ "Brazo derecho (11,13,15)","Brazo izquierdo (12,14,16)", 
+                                                                              "Pierna derecha (23,25,27)", "Pierna izquierda (24,26,28)",
+                                                                              "CaderaD (11,23,25)", "CaderaI (12,24,26)"], font=tkfont.NORMAL)
         self.cuerpo_combobox.grid(row= 3, column=1, columnspan=2 )
 
         self.anguloIniVar = tk.IntVar()
@@ -722,9 +792,9 @@ class Editor(tk.Frame):
         angFin = self.anguloFinVar.get()
         pos = self.pos_combobox.current()
         if nom and cuerpo and angIni != angFin and pos != -1:
-            NuevoEjercicio = self.alm.crear_ejercicio(nombre=nom, cuerpo=cuerpo, angIni=angIni, angFin=angFin, 
+            NuevoEjercicio = self.alm.crear_ejercicio(cuerpo=cuerpo, angIni=angIni, angFin=angFin, 
                                      pos=pos)
-            self.alm.guardar_ejercicio(NuevoEjercicio)
+            self.alm.guardar_ejercicio(nombre=nom, ejercicio=NuevoEjercicio)
             self.controller.show_frame("StartPageAdmin")
 
 
@@ -773,8 +843,8 @@ class Sesion(tk.Frame):
 
         dic = self.alm.cargar_ejercicio()
 
-        for d in dic["ejercicios"]:
-            self.listboxOpciones.insert(tk.END, d["nombre"])
+        for d in dic.keys():
+            self.listboxOpciones.insert(tk.END, d)
 
         btn_sesion = tk.Button(self, text="Guardar sesión", command=self.guardar_sesion, font=tkfont.BOLD)
         btn_sesion.grid(row=10, column=3, columnspan=2)

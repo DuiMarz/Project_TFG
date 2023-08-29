@@ -1,0 +1,84 @@
+{
+    "Prueba_Pesas-18:33": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 143,
+            "EjCompletos": 8,
+            "EjF1": 10,
+            "EjF2": 3,
+            "EjF3": 7
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 191,
+            "EjCompletos": 0,
+            "EjF1": 14,
+            "EjF2": 3,
+            "EjF3": 13
+        }
+    ],
+    "Prueba_Pesas-18:39": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 91,
+            "EjCompletos": 8,
+            "EjF1": 3,
+            "EjF2": 1,
+            "EjF3": 4
+        }
+    ],
+    "Prueba_Pesas-18:45": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 102,
+            "EjCompletos": 8,
+            "EjF1": 10,
+            "EjF2": 3,
+            "EjF3": 9
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 86,
+            "EjCompletos": 4,
+            "EjF1": 6,
+            "EjF2": 1,
+            "EjF3": 4
+        }
+    ],
+    "Prueba_Pesas-18:49": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 70,
+            "EjCompletos": 8,
+            "EjF1": 5,
+            "EjF2": 2,
+            "EjF3": 4
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 47,
+            "EjCompletos": 4,
+            "EjF1": 6,
+            "EjF2": 2,
+            "EjF3": 1
+        }
+    ],
+    "Prueba_Pesas-18:55": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 68,
+            "EjCompletos": 8,
+            "EjF1": 3,
+            "EjF2": 1,
+            "EjF3": 1
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 54,
+            "EjCompletos": 4,
+            "EjF1": 2,
+            "EjF2": 0,
+            "EjF3": 2
+        }
+    ]
+}

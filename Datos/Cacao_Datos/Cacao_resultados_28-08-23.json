@@ -1,0 +1,128 @@
+{
+    "Prueba_Pesas-12:56": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 27,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 39,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 1,
+            "EjF3": 2
+        }
+    ],
+    "Prueba_Pesas-12:58": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 37,
+            "EjCompletos": 2,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 3,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Prueba_Pesas-13:00": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 18,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 3,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Prueba_Pesas-13:01": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 17,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 3,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Prueba_Pesas-13:02": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 21,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 5,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Prueba_Pesas-13:03": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 17,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 98,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 5
+        }
+    ],
+    "Prueba_Pesas-13:05": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 53,
+            "EjCompletos": 3,
+            "EjF1": 1,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 30,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 1
+        }
+    ]
+}

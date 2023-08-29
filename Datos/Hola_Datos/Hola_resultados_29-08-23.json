@@ -1,0 +1,38 @@
+{
+    "Prueba_Pesas-12:52": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 11,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 3,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Prueba_Pesas-12:57": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 9,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 2,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ]
+}

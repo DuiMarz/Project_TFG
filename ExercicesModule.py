@@ -27,9 +27,9 @@ class utilities():
     
     def display_rep_count(self, img, count, total_reps, nseries, total_series):            #Dibujo en pantalla en contador de repeticiones
         cv2.rectangle(img, (0, 450), (250, 720), (0, 255, 0), cv2.FILLED)
-        cv2.putText(img, str(int(count)) + "/" + str(total_reps), (35, 630), cv2.FONT_HERSHEY_PLAIN, 5,
+        cv2.putText(img, "R:" + str(int(count)) + "/" + str(total_reps), (5, 630), cv2.FONT_HERSHEY_PLAIN, 5,
                     (255, 0, 0), 10)
-        cv2.putText(img, str(int(nseries)) + "/" + str(total_series), (35, 530), cv2.FONT_HERSHEY_PLAIN, 5,
+        cv2.putText(img, "S:" + str(int(nseries)) + "/" + str(total_series), (5, 530), cv2.FONT_HERSHEY_PLAIN, 5,
                     (255, 0, 0), 10)
         
     def display_rep_count_movil(self, img, count, total_reps):      #Versión para videos en formato vertical
@@ -58,7 +58,7 @@ class utilities():
     def get_performance_bar_color(self, per):   
         color = (0, 205, 205)
         state = "S0"
-        if 0 < per <= 30:
+        if 5 < per <= 30:
             color = (51, 51, 255)
             state = "S1"
         if 30 < per <= 60:
@@ -97,12 +97,13 @@ class ejercicios():
     listaSeq = []
 
     def ejercicio_generico(self, total_reps, total_series, cuerpo, posicion, t_posicion, anguloIni, anguloFin, 
-                           nombreEj, nombreSesion, nomUsuario):
-        cap = cv2.VideoCapture("pexels-michelangelo-buonarroti.mp4")
+                           nombreEj, nombreSesion, nomUsuario, camara):
+        #"pexels-michelangelo-buonarroti.mp4"
+        cap = cv2.VideoCapture(camara)
         #salida = cv2.VideoWriter('ejercicio_generico.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
         success = True
-
+        contando= False
         nseries = 0
         count = 0
         ejCompleto = 0
@@ -154,14 +155,15 @@ class ejercicios():
                                 t = int(time.process_time() - tiempoEjercicio)
                                 if t >= t_posicion:
                                     per = 100
-                                if per != 100:    
-                                    cv2.putText(img, str(t), (1150, 630), cv2.FONT_HERSHEY_PLAIN, 5,
-                                    (255, 0, 0), 10)
-                                else:
-                                    cv2.putText(img, str(t_posicion), (1150, 630), cv2.FONT_HERSHEY_PLAIN, 5,
-                                    (255, 0, 0), 10)      
+                                if t_posicion > 0:
+                                    if per != 100:    
+                                        cv2.putText(img, str(t), (1150, 630), cv2.FONT_HERSHEY_PLAIN, 5,
+                                        (255, 0, 0), 10)
+                                    else:
+                                        cv2.putText(img, str(t_posicion), (1150, 630), cv2.FONT_HERSHEY_PLAIN, 5,
+                                        (255, 0, 0), 10)      
                         elif per < 99:
-                            contando = False
+                            contando = False                  
 
                         color, current_state = utilities().get_performance_bar_color(per)
                         utilities().update_sequence(listSeq= self.listaSeq, currentState= current_state)
@@ -353,8 +355,6 @@ class ejercicios():
                             
                     elif per < 99:
                         contando = False     
-                    
-
 
                     color, current_state = utilities().get_performance_bar_color(per)
                     utilities().update_sequence(listSeq= self.listaSeq, currentState= current_state)

@@ -1,32 +1,26 @@
 {
-    "ejercicios": [
-        {
-            "nombre": "Pesas del brazo izquierdo",
-            "cuerpo": "brazoizquierdo",
-            "posicion": 0,
-            "anguloIni": 160,
-            "anguloFin": 50
-        },
-        {
-            "nombre": "Pesas del brazo derecho",
-            "cuerpo": "brazoderecho",
-            "posicion": 0,
-            "anguloIni": 155,
-            "anguloFin": 25
-        },
-        {
-            "nombre": "Ejemplo",
-            "cuerpo": "brazoderecho",
-            "posicion": 0,
-            "anguloIni": 0,
-            "anguloFin": 90
-        },
-        {
-            "nombre": "Prueba",
-            "cuerpo": "caderaD",
-            "posicion": 0,
-            "anguloIni": 0,
-            "anguloFin": 20
-        }
-    ]
+    "Pesas del brazo izquierdo": {
+        "cuerpo": "Brazo izquierdo (12,14,16)",
+        "posicion": 0,
+        "anguloIni": 160,
+        "anguloFin": 50
+    },
+    "Pesas del brazo derecho": {
+        "cuerpo": "Brazo derecho (11,13,15)",
+        "posicion": 0,
+        "anguloIni": 155,
+        "anguloFin": 50
+    },
+    "Flexion rodilla derecha": {
+        "cuerpo": "Pierna derecha (23,25,27)",
+        "posicion": 2,
+        "anguloIni": 180,
+        "anguloFin": 30
+    },
+    "Flexion rodilla izquierda": {
+        "cuerpo": "Pierna izquierda (24,26,28)",
+        "posicion": 2,
+        "anguloIni": 180,
+        "anguloFin": 30
+    }
 }

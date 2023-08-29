@@ -1,0 +1,20 @@
+{
+    "Prueba_Pesas-19:45": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 83,
+            "EjCompletos": 5,
+            "EjF1": 3,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 97,
+            "EjCompletos": 2,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 4
+        }
+    ]
+}
