@@ -92,7 +92,7 @@ class poseDetector():
         lista = [y1, y2, y3 , y4]
 
         for y in lista:
-            if abs(media - y) > 100:
+            if abs(media - y) > 70:
                 return False
         
         return True
@@ -112,15 +112,15 @@ class poseDetector():
 
 
 def main():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture("pexels-los-muertos-crew-7260756-1920x1080-24fps.mp4")
     success, img = cap.read()
     # scale_percent = 70 # percent of original size
     # width = int(img.shape[1] * scale_percent / 100)
     # height = int(img.shape[0] * scale_percent / 100)
     # dim = (width, height)
 
-    # img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-    salida = cv2.VideoWriter('Prueba.avi',cv2.VideoWriter_fourcc(*'XVID'),15.0,(1280, 720))
+    #img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+    salida = cv2.VideoWriter('Tumbarse2.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
     sTime = 0
     detector = poseDetector()
    
@@ -135,11 +135,11 @@ def main():
         # dim = (width, height)
 
         # img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-        img = cv2.flip(img,1)
+        #img = cv2.flip(img,1)
         img = cv2.resize(img, (1280, 720))
 
         
-        img = detector.findPose(img, True)
+        img = detector.findPose(img, False)
         lmList = detector.findPosition(img, False)
         if len(lmList) != 0:
             
@@ -154,29 +154,55 @@ def main():
 
             ####### Comprueba en qué posición está la persona ##############################
             #detector.findAngle(img, 11, 0, 12)
-            # if detector.persona_tumbada():
-            #     cv2.putText(img, "Persona tumbada", (0, 500), cv2.FONT_HERSHEY_PLAIN,
-            #                     2, (0, 255, 0), 3)
-            # else:
-            #     if detector.persona_de_frente(80):
-            #         if lmList[0][-1] < 0:
-            #             cv2.putText(img, "Persona de frente", (0, 500), cv2.FONT_HERSHEY_PLAIN,
-            #                     2, (0, 255, 0), 3)
-            #         elif lmList[0][-1] > 0:
-            #             cv2.putText(img, "Persona de espaldas", (0, 500), cv2.FONT_HERSHEY_PLAIN,
-            #                     2, (0, 0, 255), 3)
-            #     else:
-            #         cv2.putText(img, "Persona de lado", (0, 500), cv2.FONT_HERSHEY_PLAIN,
-            #                 2, (255, 0, 0), 3)
+            x1, y1 = lmList[11][1:3]
+            x2, y2 = lmList[12][1:3]
+            x3, y3 = lmList[23][1:3]
+            x4, y4 = lmList[24][1:3]
+
+            cv2.line(img, (x1, y1), (x2, y2), (255, 255, 255), 3)
+            cv2.line(img, (x4, y4), (x2, y2), (255, 255, 255), 3)
+            cv2.line(img, (x3, y3), (x1, y1), (255, 255, 255), 3)
+            cv2.line(img, (x3, y3), (x4, y4), (255, 255, 255), 3)
+            cv2.circle(img, (x1, y1), 10, (0, 0, 255), cv2.FILLED)
+            cv2.circle(img, (x1, y1), 15, (0, 0, 255), 2)
+            cv2.circle(img, (x2, y2), 10, (0, 0, 255), cv2.FILLED)
+            cv2.circle(img, (x2, y2), 15, (0, 0, 255), 2)
+            cv2.circle(img, (x3, y3), 10, (0, 0, 255), cv2.FILLED)
+            cv2.circle(img, (x3, y3), 15, (0, 0, 255), 2)
+            cv2.circle(img, (x4, y4), 10, (0, 0, 255), cv2.FILLED)
+            cv2.circle(img, (x4, y4), 15, (0, 0, 255), 2)
+            cv2.putText(img, str(int(y1)), (x1 - 50, y1 + 50),
+                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
+            cv2.putText(img, str(int(y2)), (x2 - 50, y2 + 50),
+                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
+            cv2.putText(img, str(int(y3)), (x3 - 50, y3 + 50),
+                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
+            cv2.putText(img, str(int(y4)), (x4 - 50, y4 + 50),
+                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
+
+            if detector.persona_tumbada():
+                cv2.putText(img, "Persona tumbada", (20, 500), cv2.FONT_HERSHEY_PLAIN,
+                                2, (0, 255, 0), 3)
+            else:
+                if detector.persona_de_frente(80):
+                    if lmList[0][-1] < 0:
+                        cv2.putText(img, "Persona de frente", (20, 500), cv2.FONT_HERSHEY_PLAIN,
+                                2, (0, 255, 0), 3)
+                    elif lmList[0][-1] > 0:
+                        cv2.putText(img, "Persona de espaldas", (20, 500), cv2.FONT_HERSHEY_PLAIN,
+                                2, (0, 0, 255), 3)
+                else:
+                    cv2.putText(img, "Persona de lado", (20, 500), cv2.FONT_HERSHEY_PLAIN,
+                            2, (255, 0, 0), 3)
             ############################################################################
-            left_arm_angle = detector.findAngle(img, 12, 14, 16)
+            #left_arm_angle = detector.findAngle(img, 12, 14, 16)
             #print(lmList)
         cTime = time.time()
         fps = 1 / (cTime - sTime)
         sTime = cTime
         
-        cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN,
-                    3, (255, 0, 0), 3)
+        # cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN,
+        #             3, (255, 0, 0), 3)
         
         cv2.imshow("Ejemplo", img)
         salida.write(img)
