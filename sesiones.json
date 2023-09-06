@@ -99,5 +99,57 @@
             0,
             1
         ]
-    ]  
+    ],
+    "FlexionesPiernas": [
+        [
+            "Flexion rodilla derecha",
+            2,
+            2,
+            0,
+            5
+        ],
+        [
+            "Flexion rodilla izquierda",
+            2,
+            2,
+            0,
+            5
+        ]
+    ],
+    "EstiramientoUnicoD": [
+        [
+            "Estiramiento Brazo-HombroD",
+            2,
+            1,
+            2,
+            2
+        ]
+    ],
+    "Brazo_izq": [
+        [
+            "Pesas del brazo izquierdo",
+            2,
+            2,
+            0,
+            1
+        ]
+    ],
+    "Brazo_der": [
+        [
+            "Pesas del brazo derecho",
+            2,
+            2,
+            0,
+            1
+        ]
+    ],
+    "FlexionBrazoDHorizontal": [
+        [
+            "Flexi\u00f3n BrazoD Horizontal",
+            2,
+            2,
+            5,
+            1
+        ]
+    ]
 }

@@ -1,0 +1,20 @@
+{
+    "FlexionesPiernas-13:03": [
+        {
+            "nombre": "Flexion rodilla derecha",
+            "TiempoTotal": 47,
+            "EjCompletos": 1,
+            "EjF1": 1,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Flexion rodilla izquierda",
+            "TiempoTotal": 47,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ]
+}

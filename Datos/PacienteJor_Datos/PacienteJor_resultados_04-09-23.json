@@ -1,0 +1,164 @@
+{
+    "Prueba_Pesas-12:49": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 47,
+            "EjCompletos": 8,
+            "EjF1": 0,
+            "EjF2": 1,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 115,
+            "EjCompletos": 4,
+            "EjF1": 2,
+            "EjF2": 1,
+            "EjF3": 4
+        }
+    ],
+    "Prueba_Pesas-13:00": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 81,
+            "EjCompletos": 8,
+            "EjF1": 11,
+            "EjF2": 1,
+            "EjF3": 1
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 56,
+            "EjCompletos": 4,
+            "EjF1": 1,
+            "EjF2": 0,
+            "EjF3": 2
+        }
+    ],
+    "Brazo_der-16:26": [
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 89,
+            "EjCompletos": 2,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 3
+        }
+    ],
+    "Brazo_der-16:28": [
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 66,
+            "EjCompletos": 4,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Brazo_der-16:31": [
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 66,
+            "EjCompletos": 4,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Brazo_der-16:33": [
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 91,
+            "EjCompletos": 2,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 3
+        }
+    ],
+    "Brazo_der-16:47": [
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 65,
+            "EjCompletos": 4,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Brazo_izq-16:48": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 92,
+            "EjCompletos": 2,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 3
+        }
+    ],
+    "FlexionBrazoDHorizontal-17:05": [
+        {
+            "nombre": "Flexi\u00f3n BrazoD Horizontal",
+            "TiempoTotal": 212,
+            "EjCompletos": 0,
+            "EjF1": 6,
+            "EjF2": 2,
+            "EjF3": 6
+        }
+    ],
+    "FlexionBrazoDHorizontal-17:10": [
+        {
+            "nombre": "Flexi\u00f3n BrazoD Horizontal",
+            "TiempoTotal": 110,
+            "EjCompletos": 4,
+            "EjF1": 4,
+            "EjF2": 1,
+            "EjF3": 2
+        }
+    ],
+    "FlexionesPiernas-17:21": [
+        {
+            "nombre": "Flexion rodilla derecha",
+            "TiempoTotal": 50,
+            "EjCompletos": 1,
+            "EjF1": 1,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Flexion rodilla izquierda",
+            "TiempoTotal": 58,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "FlexionesPiernas-17:28": [
+        {
+            "nombre": "Flexion rodilla derecha",
+            "TiempoTotal": 51,
+            "EjCompletos": 1,
+            "EjF1": 1,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Flexion rodilla izquierda",
+            "TiempoTotal": 51,
+            "EjCompletos": 0,
+            "EjF1": 1,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "EstiramientoUnicoD-18:36": [
+        {
+            "nombre": "Estiramiento Brazo-HombroD",
+            "TiempoTotal": 51,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ]
+}

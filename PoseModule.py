@@ -73,6 +73,33 @@ class poseDetector():
             cv2.putText(img, str(int(degree)), (x2 - 50, y2 + 50),
                         cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)         
         return int(degree)
+    
+    # def findAngleVertical(self, img, p1, p2, draw=True):
+    #     # Get the landmarks
+    #     x1, y1 = self.lmList[p1][1:3]
+    #     x2, y2 = self.lmList[p2][1:3]
+    #     x3, y3 = 
+
+    #     p1_vec = np.array(self.lmList[p1][1:3]) - np.array(self.lmList[p2][1:3])
+    #     p3_vec = np.array(self.lmList[p3][1:3]) - np.array(self.lmList[p2][1:3])
+
+    #     cos_theta = (np.dot(p1_vec, p3_vec)) / (1.0 * np.linalg.norm(p1_vec) * np.linalg.norm(p3_vec))
+    #     theta = np.arccos(np.clip(cos_theta, -1.0, 1.0))
+
+    #     degree = int(180 / np.pi) * theta
+        
+    #     if draw:
+    #         cv2.line(img, (x1, y1), (x2, y2), (255, 255, 255), 3)
+    #         cv2.line(img, (x3, y3), (x2, y2), (255, 255, 255), 3)
+    #         cv2.circle(img, (x1, y1), 10, (0, 0, 255), cv2.FILLED)
+    #         cv2.circle(img, (x1, y1), 15, (0, 0, 255), 2)
+    #         cv2.circle(img, (x2, y2), 10, (0, 0, 255), cv2.FILLED)
+    #         cv2.circle(img, (x2, y2), 15, (0, 0, 255), 2)
+    #         cv2.circle(img, (x3, y3), 10, (0, 0, 255), cv2.FILLED)
+    #         cv2.circle(img, (x3, y3), 15, (0, 0, 255), 2)
+    #         cv2.putText(img, str(int(degree)), (x2 - 50, y2 + 50),
+    #                     cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)         
+    #     return int(degree)
 
     def persona_de_frente(self, angulo):
         angleCara = self.findAngle(None, 11, 0, 12, False)
@@ -112,7 +139,7 @@ class poseDetector():
 
 
 def main():
-    cap = cv2.VideoCapture("pexels-los-muertos-crew-7260756-1920x1080-24fps.mp4")
+    cap = cv2.VideoCapture("pexels-kampus-production-6111023 (2160p).mp4")
     success, img = cap.read()
     # scale_percent = 70 # percent of original size
     # width = int(img.shape[1] * scale_percent / 100)
@@ -120,7 +147,7 @@ def main():
     # dim = (width, height)
 
     #img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-    salida = cv2.VideoWriter('Tumbarse2.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
+    salida = cv2.VideoWriter('MultiPersona.avi',cv2.VideoWriter_fourcc(*'XVID'),20,(1280, 720))
     sTime = 0
     detector = poseDetector()
    
@@ -139,9 +166,9 @@ def main():
         img = cv2.resize(img, (1280, 720))
 
         
-        img = detector.findPose(img, False)
+        img = detector.findPose(img, True)
         lmList = detector.findPosition(img, False)
-        if len(lmList) != 0:
+        #if len(lmList) != 0:
             
             ### Muestra por pantalla la coordenada z de una landmark ##########
             # Se considera a la cadera el origen de coordenadas. La coordenada será negativa si está entre la coordenada 0 y la cámara,
@@ -154,46 +181,46 @@ def main():
 
             ####### Comprueba en qué posición está la persona ##############################
             #detector.findAngle(img, 11, 0, 12)
-            x1, y1 = lmList[11][1:3]
-            x2, y2 = lmList[12][1:3]
-            x3, y3 = lmList[23][1:3]
-            x4, y4 = lmList[24][1:3]
+            # x1, y1 = lmList[11][1:3]
+            # x2, y2 = lmList[12][1:3]
+            # x3, y3 = lmList[23][1:3]
+            # x4, y4 = lmList[24][1:3]
 
-            cv2.line(img, (x1, y1), (x2, y2), (255, 255, 255), 3)
-            cv2.line(img, (x4, y4), (x2, y2), (255, 255, 255), 3)
-            cv2.line(img, (x3, y3), (x1, y1), (255, 255, 255), 3)
-            cv2.line(img, (x3, y3), (x4, y4), (255, 255, 255), 3)
-            cv2.circle(img, (x1, y1), 10, (0, 0, 255), cv2.FILLED)
-            cv2.circle(img, (x1, y1), 15, (0, 0, 255), 2)
-            cv2.circle(img, (x2, y2), 10, (0, 0, 255), cv2.FILLED)
-            cv2.circle(img, (x2, y2), 15, (0, 0, 255), 2)
-            cv2.circle(img, (x3, y3), 10, (0, 0, 255), cv2.FILLED)
-            cv2.circle(img, (x3, y3), 15, (0, 0, 255), 2)
-            cv2.circle(img, (x4, y4), 10, (0, 0, 255), cv2.FILLED)
-            cv2.circle(img, (x4, y4), 15, (0, 0, 255), 2)
-            cv2.putText(img, str(int(y1)), (x1 - 50, y1 + 50),
-                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
-            cv2.putText(img, str(int(y2)), (x2 - 50, y2 + 50),
-                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
-            cv2.putText(img, str(int(y3)), (x3 - 50, y3 + 50),
-                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
-            cv2.putText(img, str(int(y4)), (x4 - 50, y4 + 50),
-                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
+            # cv2.line(img, (x1, y1), (x2, y2), (255, 255, 255), 3)
+            # cv2.line(img, (x4, y4), (x2, y2), (255, 255, 255), 3)
+            # cv2.line(img, (x3, y3), (x1, y1), (255, 255, 255), 3)
+            # cv2.line(img, (x3, y3), (x4, y4), (255, 255, 255), 3)
+            # cv2.circle(img, (x1, y1), 10, (0, 0, 255), cv2.FILLED)
+            # cv2.circle(img, (x1, y1), 15, (0, 0, 255), 2)
+            # cv2.circle(img, (x2, y2), 10, (0, 0, 255), cv2.FILLED)
+            # cv2.circle(img, (x2, y2), 15, (0, 0, 255), 2)
+            # cv2.circle(img, (x3, y3), 10, (0, 0, 255), cv2.FILLED)
+            # cv2.circle(img, (x3, y3), 15, (0, 0, 255), 2)
+            # cv2.circle(img, (x4, y4), 10, (0, 0, 255), cv2.FILLED)
+            # cv2.circle(img, (x4, y4), 15, (0, 0, 255), 2)
+            # cv2.putText(img, str(int(y1)), (x1 - 50, y1 + 50),
+            #             cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
+            # cv2.putText(img, str(int(y2)), (x2 - 50, y2 + 50),
+            #             cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
+            # cv2.putText(img, str(int(y3)), (x3 - 50, y3 + 50),
+            #             cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
+            # cv2.putText(img, str(int(y4)), (x4 - 50, y4 + 50),
+            #             cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)  
 
-            if detector.persona_tumbada():
-                cv2.putText(img, "Persona tumbada", (20, 500), cv2.FONT_HERSHEY_PLAIN,
-                                2, (0, 255, 0), 3)
-            else:
-                if detector.persona_de_frente(80):
-                    if lmList[0][-1] < 0:
-                        cv2.putText(img, "Persona de frente", (20, 500), cv2.FONT_HERSHEY_PLAIN,
-                                2, (0, 255, 0), 3)
-                    elif lmList[0][-1] > 0:
-                        cv2.putText(img, "Persona de espaldas", (20, 500), cv2.FONT_HERSHEY_PLAIN,
-                                2, (0, 0, 255), 3)
-                else:
-                    cv2.putText(img, "Persona de lado", (20, 500), cv2.FONT_HERSHEY_PLAIN,
-                            2, (255, 0, 0), 3)
+            # if detector.persona_tumbada():
+            #     cv2.putText(img, "Persona tumbada", (20, 500), cv2.FONT_HERSHEY_PLAIN,
+            #                     2, (0, 255, 0), 3)
+            # else:
+            #     if detector.persona_de_frente(80):
+            #         if lmList[0][-1] < 0:
+            #             cv2.putText(img, "Persona de frente", (20, 500), cv2.FONT_HERSHEY_PLAIN,
+            #                     2, (0, 255, 0), 3)
+            #         elif lmList[0][-1] > 0:
+            #             cv2.putText(img, "Persona de espaldas", (20, 500), cv2.FONT_HERSHEY_PLAIN,
+            #                     2, (0, 0, 255), 3)
+            #     else:
+            #         cv2.putText(img, "Persona de lado", (20, 500), cv2.FONT_HERSHEY_PLAIN,
+            #                 2, (255, 0, 0), 3)
             ############################################################################
             #left_arm_angle = detector.findAngle(img, 12, 14, 16)
             #print(lmList)

@@ -100,7 +100,7 @@ class ejercicios():
                            nombreEj, nombreSesion, nomUsuario, camara):
         #"pexels-michelangelo-buonarroti.mp4"
         cap = cv2.VideoCapture(camara)
-        #salida = cv2.VideoWriter('ejercicio_generico.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
+        #salida = cv2.VideoWriter('ejercicio_generico3.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
         success = True
         contando= False
@@ -110,6 +110,8 @@ class ejercicios():
         countF1 = 0
         countF2 = 0
         countF3 = 0
+
+        sTime = 0
     
         start = time.process_time()
         while nseries < total_series:
@@ -117,6 +119,7 @@ class ejercicios():
                 success, img = cap.read()
                 if not success:
                     break
+                img = cv2.flip(img,1)
                 img = cv2.resize(img, (1280, 720))
         
                 pos = False
@@ -190,7 +193,13 @@ class ejercicios():
                         elif posicion == 2:
                             print("Tumbate de perfil a la cámara, por favor")
                         detector.findAngle(img, 11, 0, 12, True)
-
+                        
+                cTime = time.time()
+                fps = 1 / (cTime - sTime)
+                sTime = cTime
+                
+                # cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN,
+                #             3, (255, 0, 0), 3)
                 cv2.imshow("Image", img)
                 #salida.write(img)
                 if cv2.waitKey(1)== ord('q'):
@@ -480,7 +489,7 @@ class ejercicios():
 
                     utilities().draw_performance_bar(img, per, bar, color, count)
 
-                    utilities().display_rep_count(img, count, total_reps)
+                    utilities().display_rep_count(img, count, total_reps, 1, 2)
                 else:
                     print("Ponte de lado, por favor")
                     detector.findAngle(img, 11, 0, 12, True)
@@ -505,10 +514,10 @@ class ejercicios():
 
     ### EJERCICIO DONDE SE EJERCITAN DOS MIEMBROS DEL CUERPO A LA VEZ
     def estiramiento(self, total_reps):                                
-        cap = cv2.VideoCapture("pexels-los-muertos-crew-7260756-1920x1080-24fps.mp4")
+        cap = cv2.VideoCapture("pexels-mart-production-8027449 (2160p).mp4")
         #cap = cv2.VideoCapture(0)
         
-        salida = cv2.VideoWriter('ejercicio_estiramiento_dosmiembros.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
+        salida = cv2.VideoWriter('sentadillas.avi',cv2.VideoWriter_fourcc(*'XVID'),20.0,(1280, 720))
         detector = pm.poseDetector()
         success = True
         count = 0
@@ -525,37 +534,56 @@ class ejercicios():
             img = cv2.resize(img, (1280, 720))
  
             
-            persona_tumbada = False
+            #persona_tumbada = False
+            personaPerfil = False
             #img = cv2.flip(img,1)
             img = detector.findPose(img, False)
             landmark_list = detector.findPosition(img, False)
             if len(landmark_list) != 0:
 
-                persona_tumbada = detector.persona_tumbada()
+                #persona_tumbada = detector.persona_tumbada()
+                personaPerfil = detector.persona_de_frente(80)
                
-                if persona_tumbada:
-                    right_arm_angle = detector.findAngle(img, 16, 12, 24)            ## Parte del cuerpo
-                    right_leg_angle = detector.findAngle(img, 24, 26, 28) 
+                if not personaPerfil:
+                    #right_arm_angle = detector.findAngle(img, 16, 12, 24)            ## Parte del cuerpo
+                    espalda = detector.findAngle(img, 11, 23, 25)
+                    #right_leg_angle = detector.findAngle(img, 24, 26, 28) 
+                    left_leg_angle = detector.findAngle(img, 23, 25, 27) 
 
                     #right_leg_angle = -(right_leg_angle -360)
                     #print('right_leg_angle: ',right_leg_angle, '\n')
-                    per1 = np.interp(right_arm_angle, (65, 175), (0, 50))           ## Angulo inicial y final 
+                    per1 = np.interp(espalda, (170, 70), (0, 50), period = 360)           ## Angulo inicial y final 
 
                     #print('per1: ',per1, '\n')
-                    bar1 = np.interp(right_arm_angle, (65, 175), (650, 375))
+                    bar1 = np.interp(espalda, (170, 70), (650, 375), period = 360)
                     
 
-                    per2 = np.interp(right_leg_angle, (275, 185), (0, 50), period = 360)   #(90, 175)
+                    per2 = np.interp(left_leg_angle, (170, 70), (0, 50), period = 360)   #(90, 175)
                     #print('per2: ', per2, '\n')
-                    bar2 = np.interp(right_leg_angle, (275, 185), (0, 275), period= 360)
+                    bar2 = np.interp(left_leg_angle, (170, 70), (0, 275), period = 360)
 
 
-                    if right_leg_angle < 185:
-                        per2 = 50
-                        bar2 = 275
-                    elif right_leg_angle > 275:
+                    if espalda > 170:
+                        per1 = 0
+                        bar1 = 650
+                    elif espalda < 70 and espalda > 60:
+                        per1 = 50
+                        bar1 = 375
+
+                    if left_leg_angle > 170:
                         per2 = 0
                         bar2 = 0
+                    elif left_leg_angle < 70 and left_leg_angle > 60:
+                        per2 = 50
+                        bar2 = 275
+
+
+                    # if right_leg_angle < 185:
+                    #     per2 = 50
+                    #     bar2 = 275
+                    # elif right_leg_angle > 275:
+                    #     per2 = 0
+                    #     bar2 = 0
 
                     per = round(per1+per2)
                     bar = bar1-bar2
@@ -577,7 +605,7 @@ class ejercicios():
 
                     utilities().draw_performance_bar(img, per, bar, color, count)
 
-                    utilities().display_rep_count(img, count, total_reps)
+                    utilities().display_rep_count(img, count, total_reps, 0, 1)
                 else:
                     print("Túmbate, por favor")
                     #detector.findAngle(img, 11, 0, 12, True)

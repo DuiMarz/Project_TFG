@@ -81,20 +81,20 @@ class TrainerApp(tk.Tk):
         dev_port = 0
         working_ports = []
         available_ports = []
-        while len(non_working_ports) < 6: # if there are more than 5 non working ports stop the testing. 
+        while len(non_working_ports) < 5: # if there are more than 5 non working ports stop the testing. 
             camera = cv2.VideoCapture(dev_port)
             if not camera.isOpened():
                 non_working_ports.append(dev_port)
-                print("Port %s is not working." %dev_port)
+                #print("Port %s is not working." %dev_port)
             else:
                 is_reading, img = camera.read()
                 w = camera.get(3)
                 h = camera.get(4)
                 if is_reading:
-                    print("Port %s is working and reads images (%s x %s)" %(dev_port,h,w))
+                    #print("Port %s is working and reads images (%s x %s)" %(dev_port,h,w))
                     working_ports.append((dev_port,h,w))
                 else:
-                    print("Port %s for camera ( %s x %s) is present but does not reads." %(dev_port,h,w))
+                    #print("Port %s for camera ( %s x %s) is present but does not reads." %(dev_port,h,w))
                     available_ports.append(dev_port)
             dev_port +=1
         return available_ports,working_ports,non_working_ports
@@ -754,7 +754,9 @@ class Editor(tk.Frame):
         etiqueta_cuerpocb.grid(row=2, column=1, columnspan=2, padx=10, sticky=tk.EW)
         self.cuerpo_combobox = ttk.Combobox(self, state="readonly", values = [ "Brazo derecho (11,13,15)","Brazo izquierdo (12,14,16)", 
                                                                               "Pierna derecha (23,25,27)", "Pierna izquierda (24,26,28)",
-                                                                              "CaderaD (11,23,25)", "CaderaI (12,24,26)"], font=tkfont.NORMAL)
+                                                                              "CaderaD (11,23,25)", "CaderaI (12,24,26)",
+                                                                            "Hombro derecho (15,11,23)", "Hombro izquierdo (16,12,24)"], 
+                                                                            font=tkfont.NORMAL)
         self.cuerpo_combobox.grid(row= 3, column=1, columnspan=2 )
 
         self.anguloIniVar = tk.IntVar()

@@ -3,24 +3,36 @@
         "cuerpo": "Brazo izquierdo (12,14,16)",
         "posicion": 0,
         "anguloIni": 160,
-        "anguloFin": 50
+        "anguloFin": 55
     },
     "Pesas del brazo derecho": {
         "cuerpo": "Brazo derecho (11,13,15)",
         "posicion": 0,
         "anguloIni": 155,
-        "anguloFin": 50
+        "anguloFin": 20
     },
     "Flexion rodilla derecha": {
         "cuerpo": "Pierna derecha (23,25,27)",
         "posicion": 2,
-        "anguloIni": 180,
-        "anguloFin": 30
+        "anguloIni": 90,
+        "anguloFin": 170
     },
     "Flexion rodilla izquierda": {
         "cuerpo": "Pierna izquierda (24,26,28)",
         "posicion": 2,
-        "anguloIni": 180,
-        "anguloFin": 30
+        "anguloIni": 170,
+        "anguloFin": 90
+    },
+    "Estiramiento Brazo-HombroD": {
+        "cuerpo": "Hombro izquierdo (16,12,24)",
+        "posicion": 2,
+        "anguloIni": 65,
+        "anguloFin": 175
+    },
+    "Flexi\u00f3n BrazoD Horizontal": {
+        "cuerpo": "Brazo derecho (11,13,15)",
+        "posicion": 0,
+        "anguloIni": 50,
+        "anguloFin": 170
     }
 }

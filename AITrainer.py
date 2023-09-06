@@ -63,8 +63,8 @@ def ejecutar_ejercicio(nombre=None, repes=1, series=1, tiempo_pos=0, nomSesion="
 def main():
     # lista = crear_sesion()
     # comenzar_sesion(listaEj=lista)
-    alm.ejecutar_ejercicio("Pesas del brazo derecho")
-    #ejercicios.pesas_brazoIzquierdo(5)
+    #alm.ejecutar_ejercicio("Pesas del brazo derecho")
+    ejercicios.estiramiento(2)
 
 
 if __name__ == "__main__":

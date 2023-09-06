@@ -1,0 +1,38 @@
+{
+    "FlexionesPiernas-12:58": [
+        {
+            "nombre": "Flexion rodilla derecha",
+            "TiempoTotal": 76,
+            "EjCompletos": 1,
+            "EjF1": 1,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Flexion rodilla izquierda",
+            "TiempoTotal": 49,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "EstiramientoUnicoD-13:15": [
+        {
+            "nombre": "Estiramiento Brazo-HombroD",
+            "TiempoTotal": 47,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Estiramiento Brazo-HombroD",
+            "TiempoTotal": 56,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ]
+}

@@ -13,7 +13,9 @@ class almacenamiento():
         "Pierna derecha (23,25,27)": [23, 25, 27],
         "Pierna izquierda (24,26,28)": [24, 26, 28],
         "CaderaD (11,23,25)": [11, 23, 25],
-        "CaderaI (12,24,26)": [12, 24, 26]
+        "CaderaI (12,24,26)": [12, 24, 26],
+        "Hombro derecho (15,11,23)": [15, 11, 23],
+        "Hombro izquierdo (16,12,24)": [16, 12, 24]
     }
 
     

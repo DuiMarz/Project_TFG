@@ -1,0 +1,78 @@
+{
+    "Brazo_izq-12:35": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 0,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 43,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Brazo_izq-12:36": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 41,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Brazo_izq-12:37": [
+        {
+            "nombre": "Pesas del brazo izquierdo",
+            "TiempoTotal": 43,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Brazo_der-12:41": [
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 36,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        },
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 36,
+            "EjCompletos": 1,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Brazo_der-13:55": [
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 12,
+            "EjCompletos": 0,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ],
+    "Brazo_der-13:56": [
+        {
+            "nombre": "Pesas del brazo derecho",
+            "TiempoTotal": 68,
+            "EjCompletos": 4,
+            "EjF1": 0,
+            "EjF2": 0,
+            "EjF3": 0
+        }
+    ]
+}
