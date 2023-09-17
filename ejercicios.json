@@ -34,5 +34,29 @@
         "posicion": 0,
         "anguloIni": 50,
         "anguloFin": 170
+    },
+    "EjercicioPrueba": {
+        "cuerpo": "Brazo derecho (11,13,15)",
+        "posicion": 0,
+        "anguloIni": 50,
+        "anguloFin": 170
+    },
+    "EjercicioPrueba2": {
+        "cuerpo": "Brazo derecho (11,13,15)",
+        "posicion": 0,
+        "anguloIni": 31,
+        "anguloFin": 173
+    },
+    "EjercicioPrueba3": {
+        "cuerpo": "Brazo izquierdo (12,14,16)",
+        "posicion": 0,
+        "anguloIni": 40,
+        "anguloFin": 170
+    },
+    "EjercicioPrueba4": {
+        "cuerpo": "Brazo izquierdo (12,14,16)",
+        "posicion": 0,
+        "anguloIni": 17,
+        "anguloFin": 167
     }
 }

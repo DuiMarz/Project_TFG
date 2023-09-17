@@ -15,7 +15,7 @@ pip install -r "%SCRIPT_DIR%\requirements.txt"
 echo Entorno virtual creado y dependencias instaladas.
 
 rem Ejecutar tu aplicación, si es necesario
-rem python "%SCRIPT_DIR%\GUI.py"
+python "%SCRIPT_DIR%\GUI.py"
 
 rem Desactivar el entorno virtual al finalizar
 deactivate

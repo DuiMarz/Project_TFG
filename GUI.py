@@ -24,24 +24,27 @@ class TrainerApp(tk.Tk):
 
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
 
-        container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand=True)
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+        self.container = tk.Frame(self)
+        self.container.pack(side="top", fill="both", expand=True)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
 
-        self.frames["Inicio_Registro"] = Inicio_Registro(parent=container, controller=self)
-        self.frames["IniciarSesion"] = IniciarSesion(parent=container, controller=self)
-        self.frames["Registro"] = Registro(parent=container, controller=self)
-        self.frames["StartPageUser"] = StartPageUser(parent=container, controller=self)
-        self.frames["StartPageAdmin"] = StartPageAdmin(parent=container, controller=self)
-        self.frames["GraficasResultadosUser"] = GraficasResultadosUser(parent=container, controller=self)
-        self.frames["GraficasResultadosAdmin"] = GraficasResultadosAdmin(parent=container, controller=self)
-        self.frames["Sesion"] = Sesion(parent=container, controller=self)
-        self.frames["Editor"] = Editor(parent=container, controller=self)
-        self.frames["InicioSesionEj"] = InicioSesionEj(parent=container, controller=self)
-
+        
+        self.frames["Inicio_Registro"] = Inicio_Registro(parent=self.container, controller=self)
+        self.frames["IniciarSesion"] = IniciarSesion(parent=self.container, controller=self)
+        self.frames["Registro"] = Registro(parent=self.container, controller=self)
+       
+        self.frames["StartPageUser"] = StartPageUser(parent=self.container, controller=self)
+        
+        self.frames["StartPageAdmin"] = StartPageAdmin(parent=self.container, controller=self)
+        self.frames["GraficasResultadosUser"] = GraficasResultadosUser(parent=self.container, controller=self)
+        self.frames["GraficasResultadosAdmin"] = GraficasResultadosAdmin(parent=self.container, controller=self)
+        self.frames["Sesion"] = Sesion(parent=self.container, controller=self)
+        self.frames["Editor"] = Editor(parent=self.container, controller=self)
+        self.frames["InicioSesionEj"] = InicioSesionEj(parent=self.container, controller=self)
+        
         self.frames["Inicio_Registro"].grid(row=0, column=0, sticky="nsew")
         self.frames["IniciarSesion"].grid(row=0, column=0, sticky="nsew")
         self.frames["Registro"].grid(row=0, column=0, sticky="nsew")
@@ -52,6 +55,8 @@ class TrainerApp(tk.Tk):
         self.frames["Sesion"].grid(row=0, column=0, sticky="nsew")
         self.frames["Editor"].grid(row=0, column=0, sticky="nsew")
         self.frames["InicioSesionEj"].grid(row=0, column=0, sticky="nsew")
+
+        
         self.show_frame("Inicio_Registro")
 
     def show_frame(self, page_name):
@@ -72,6 +77,16 @@ class TrainerApp(tk.Tk):
     def actualizarAdmin(self):
         ini = self.frames["GraficasResultadosAdmin"]
         ini.actu_lista()
+
+    def actualizarListaEj(self):
+        ini = self.frames["Sesion"]
+        ini.actuListaEj()
+
+    def actualizarListaSesiones(self):
+        ini = self.frames["InicioSesionEj"]
+        ini.actuListaSesiones()
+
+        
 
     def list_ports(self):
     # """
@@ -269,12 +284,8 @@ class StartPageUser(tk.Frame):
                          font=controller.title_font, pady=20, width=55)
         label.grid(row=0, column=0)
 
-        # button_sesion = tk.Button(self, text="Crear sesión", pady= 10,
-        #                     command=lambda: controller.show_frame("Sesion"), font=tkfont.NORMAL, border=3)
-        # button_ejercicio = tk.Button(self, text="Crear ejercicio", pady=10,
-        #                     command=lambda: controller.show_frame("Editor"), font=tkfont.NORMAL, border=3)
         button_listaSesiones = tk.Button(self, text="Elegir sesión de ejercicios", pady=10,
-                            command=lambda: controller.show_frame("InicioSesionEj"), font=tkfont.NORMAL, border=3)
+                            command=self.iniciarSesiones, font=tkfont.NORMAL, border=3)
         button_grafica = tk.Button(self, text="Consultar gráficas de resultados", pady=10,
                             command=self.iniciarGraficas, font=tkfont.NORMAL, border=3)
         button_salir = tk.Button(self, text="Cerrar sesión", pady=10,
@@ -290,6 +301,10 @@ class StartPageUser(tk.Frame):
         self.controller.actualizarUser()
         self.controller.show_frame("GraficasResultadosUser")
 
+    def iniciarSesiones(self):
+        self.controller.actualizarListaSesiones()
+        self.controller.show_frame("InicioSesionEj")
+
 
 
 class StartPageAdmin(tk.Frame):
@@ -304,7 +319,7 @@ class StartPageAdmin(tk.Frame):
         label.grid(row=0, column=0)
 
         button_sesion = tk.Button(self, text="Crear sesión", pady= 10,
-                            command=lambda: controller.show_frame("Sesion"), font=tkfont.NORMAL, border=3)
+                            command=self.iniciarEjs, font=tkfont.NORMAL, border=3)
         button_ejercicio = tk.Button(self, text="Crear ejercicio", pady=10,
                             command=lambda: controller.show_frame("Editor"), font=tkfont.NORMAL, border=3)
         button_grafica = tk.Button(self, text="Consultar gráficas de resultados", pady=10,
@@ -324,6 +339,10 @@ class StartPageAdmin(tk.Frame):
     def iniciarGraficas(self):
         self.controller.actualizarAdmin()
         self.controller.show_frame("GraficasResultadosAdmin")
+
+    def iniciarEjs(self):
+        self.controller.actualizarListaEj()
+        self.controller.show_frame("Sesion")
 
 class GraficasResultadosUser(tk.Frame):
 
@@ -688,10 +707,6 @@ class InicioSesionEj(tk.Frame):
         self.listbox.pack(side=tk.LEFT, fill="both", expand=True)
         list_frame.grid(row=1, column=4, pady=10, columnspan=2, rowspan=5)
 
-        dic = self.alm.cargar_sesiones()
-
-        for d in dic.keys():
-            self.listbox.insert(tk.END, d)
 
         av,self.work,nwork = self.controller.list_ports()
 
@@ -708,7 +723,7 @@ class InicioSesionEj(tk.Frame):
                                     font=tkfont.NORMAL, border=3)
         button_comenzar.grid(row = 11, column=4)
 
-        button_volver = tk.Button(self, text="Volver al inicio", command=lambda: controller.show_frame("StartPageUser"), 
+        button_volver = tk.Button(self, text="Volver al inicio", command=self.volver, 
                                   font=tkfont.NORMAL, border=3)
         button_volver.grid(row=12, column=4, pady=20)
 
@@ -728,6 +743,16 @@ class InicioSesionEj(tk.Frame):
             nombreSesionActual = sesion + "-" + horaActual
             indexCam = self.work[index][0]
             ait.comenzar_sesion(listaEjercicios, nombreSesionActual, nombreUsuario, indexCam)
+    
+    def actuListaSesiones(self):
+        dic = self.alm.cargar_sesiones()
+
+        for d in dic.keys():
+            self.listbox.insert(tk.END, d)
+
+    def volver(self):
+        self.listbox.delete(0, tk.END)
+        self.controller.show_frame("StartPageUser")
                  
 
 class Editor(tk.Frame):
@@ -843,17 +868,13 @@ class Sesion(tk.Frame):
         self.listbox.pack(side=tk.LEFT, fill="both", expand=True)
         list_frame1.grid(row=1, column=2, pady=10, rowspan=10)
 
-        dic = self.alm.cargar_ejercicio()
-
-        for d in dic.keys():
-            self.listboxOpciones.insert(tk.END, d)
-
+        
         btn_sesion = tk.Button(self, text="Guardar sesión", command=self.guardar_sesion, font=tkfont.BOLD)
         btn_sesion.grid(row=10, column=3, columnspan=2)
 
 
         button = tk.Button(self, text="Volver al inicio",
-                           command=lambda: controller.show_frame("StartPageAdmin"), font= tkfont.NORMAL)
+                           command=self.volver, font= tkfont.NORMAL)
         button.grid(row=14, column=3, padx=20)
 
         boton_add_to_list = tk.Button(self, text="Añadir a la lista",
@@ -941,7 +962,7 @@ class Sesion(tk.Frame):
                 self.ejerciciosSesion[selected_index] = aux
 
 #La sesión se guarda como una lista compuesta por el nombre (0), las repeticiones (1), las series (2), el tiempo en el que 
-#mantener la posición (3) y el tiempo de desacnso tras la actividad (4)
+#mantener la posición (3) y el tiempo de descanso tras la actividad (4)
     def listaEjercicios(self):
             nomSeleccionada = self.listboxOpciones.curselection()
             if(nomSeleccionada):
@@ -963,6 +984,17 @@ class Sesion(tk.Frame):
             sesion = {nomSesion: listaSesion}
             self.alm.guardar_sesion(sesion, nomSesion)
             self.controller.show_frame("StartPageAdmin")
+
+    def actuListaEj(self):
+        dic = self.alm.cargar_ejercicio()
+
+        for d in dic.keys():
+            self.listboxOpciones.insert(tk.END, d)
+
+    def volver(self):
+        self.listboxOpciones.delete(0, tk.END)
+        self.controller.show_frame("StartPageAdmin")
+
 
 
 

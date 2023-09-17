@@ -151,5 +151,37 @@
             5,
             1
         ]
+    ],
+    "SesionPrueba1": [
+        [
+            "EjercicioPrueba3",
+            1,
+            2,
+            5,
+            10
+        ],
+        [
+            "EjercicioPrueba3",
+            2,
+            2,
+            5,
+            10
+        ]
+    ],
+    "SesionPrueba2": [
+        [
+            "EjercicioPrueba4",
+            1,
+            1,
+            0,
+            1
+        ],
+        [
+            "EjercicioPrueba4",
+            1,
+            1,
+            0,
+            1
+        ]
     ]
 }
