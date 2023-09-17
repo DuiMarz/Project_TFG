@@ -32,7 +32,8 @@ def crear_sesion():
 
 def comenzar_sesion(listaEj, nomSesion, nomUsuario, camara):
 
-    _ = input("Dale a ENTER para continuar")
+    #_ = input("Dale a ENTER para continuar")
+    time.sleep(5.0)
     if(listaEj != []):
         for ejercicio in listaEj:                   #Cada ejercicio es una lista con el nombre del ejercicio y otro parametros
             nomEj = ejercicio[0]
